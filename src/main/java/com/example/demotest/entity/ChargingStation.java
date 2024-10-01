@@ -3,11 +3,12 @@ package com.example.demotest.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -34,15 +35,37 @@ public class ChargingStation {
     @Enumerated(EnumType.STRING)
     private ChargerType chargerType;
 
-    @ManyToOne
-    @JoinColumn(name = "charging_station_type_id")
-    private StationChargerType stationchargerType;
+    @OneToMany(mappedBy = "chargingStation", cascade = CascadeType.ALL)
+    private Set<StationChargerType> stationChargerTypes = new HashSet<>();
 
     //contable
    // private int numberOfChargingPoints;
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    public void setStationChargerTypes(Set<StationChargerType> stationChargerTypes) {
+        this.stationChargerTypes = stationChargerTypes;
+        for (StationChargerType stationChargerType: stationChargerTypes){
+            stationChargerType.setChargingStation(this);
+        }
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public void setChargerType(ChargerType chargerType) {
+        this.chargerType = chargerType;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 }
 
 

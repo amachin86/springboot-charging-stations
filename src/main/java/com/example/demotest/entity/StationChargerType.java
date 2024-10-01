@@ -1,5 +1,6 @@
 package com.example.demotest.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,4 +20,9 @@ public class StationChargerType {
     private ChargerType type;
 
     private double power_levels;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "station_id")
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
+    private ChargingStation chargingStation;
 }
