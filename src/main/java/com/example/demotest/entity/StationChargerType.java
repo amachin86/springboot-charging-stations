@@ -22,7 +22,7 @@ public class StationChargerType {
     private double power_levels;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "station_id")
+    @JoinColumn(name = "fk_station_id")
     @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     private ChargingStation chargingStation;
 }
