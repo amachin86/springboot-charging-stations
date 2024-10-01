@@ -11,6 +11,7 @@ import com.example.demotest.repository.StationChargerTypeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.dozer.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -21,14 +22,17 @@ import java.util.UUID;
 @RequiredArgsConstructor //injection dependencies for constructor
 @Slf4j
 public class StationChargerTypeService {
+    @Autowired
     private ChargingStationRepository chanChargingStationRepository;
+    @Autowired
     private StationChargerTypeRepository stationChargerTypeRepository;
+    @Autowired
     private final Mapper dozerMapper;
 
     @Transactional
     public StationChargerTypeResponse save(StationChargerTypeRequest chargingStationRequest) {
         UUID chargingStationId = chargingStationRequest.getChargingStation().getId();
-        ChargingStation chanStation = chanChargingStationRepository.findChargingStationById(chargingStationId)
+        ChargingStation chanStation = chanChargingStationRepository.findById(chargingStationId)
                 .orElseThrow(() -> new RuntimeException("Charging Station with id " + chargingStationId + " not found"));
 
         StationChargerType stationChargerType = dozerMapper.map(chargingStationRequest, StationChargerType.class);

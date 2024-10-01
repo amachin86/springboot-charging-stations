@@ -2,12 +2,15 @@ package com.example.demotest.service;
 
 import com.example.demotest.dto.request.ChargingStationRequest;
 import com.example.demotest.dto.response.ChargingStationResponse;
+import com.example.demotest.entity.ChargerType;
 import com.example.demotest.entity.ChargingStation;
+import com.example.demotest.entity.Status;
 import com.example.demotest.repository.ChargingStationRepository;
 import com.example.demotest.utils.MapperUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.dozer.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,20 +25,22 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor //injection dependencies for constructor
 @Slf4j
 public class ChargingStationService {
-
+    @Autowired
     private ChargingStationRepository repository;
-
+    @Autowired
     private final Mapper dozerMapper;
 
 
-    @Transactional
-    public ChargingStationResponse save(ChargingStationRequest chargingStation) {
+    //@Transactional
+    public ChargingStationResponse save(ChargingStation chargingStation) {
         ChargingStationResponse chargingStationResponse = null;
         log.info("ChargingStationService::save execution started.");
         try {
             log.debug("ChargingStationService::save request parameters {}", chargingStation);
-            ChargingStation saveChargingStation = dozerMapper.map(chargingStation, ChargingStation.class);
-            ChargingStation chanChargingStationResp = repository.saveAndFlush(saveChargingStation);
+           // ChargingStation saveChargingStation = dozerMapper.map(chargingStation, ChargingStation.class);
+
+            ChargingStation chanChargingStationResp = repository.saveAndFlush(chargingStation);
+
             chargingStationResponse = dozerMapper.map(chanChargingStationResp, ChargingStationResponse.class);
             log.debug("ChargingStationService::save receive response from Database {}", chargingStationResponse);
         } catch (Exception ex) {
@@ -51,7 +56,7 @@ public class ChargingStationService {
         ChargingStationResponse chargingStationResponse = null;
         log.info("ChargingStationService::update execution started.");
 
-        ChargingStation chanStation = repository.findChargingStationById(id)
+        ChargingStation chanStation = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Charging Station with id " + id + " not found"));
         try {
             log.debug("ChargingStationService::update request parameters id {} and Charging Station {}", id, chargingStation);
@@ -73,7 +78,7 @@ public class ChargingStationService {
         ChargingStationResponse chargingStationResponse = null;
         log.info("ChargingStationService::deleteById execution started.");
 
-        ChargingStation ChargingStationRes = repository.findChargingStationById(id)
+        ChargingStation ChargingStationRes = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Charging Station with id " + id + " not found"));
         try {
             log.debug("DroneServiceImpl::deleteById request parameters id {}", id);
@@ -96,7 +101,8 @@ public class ChargingStationService {
         ChargingStationResponse chargingStationResponse = null;
         log.info("ChargingStationService::ChargingStationById execution started.");
 
-        ChargingStation ChargingStationRes = repository.findChargingStationById(id)
+
+        ChargingStation ChargingStationRes = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Charging Station with id " + id + " not found"));
 
         chargingStationResponse = dozerMapper.map(ChargingStationRes, ChargingStationResponse.class);

@@ -69,7 +69,9 @@ public class ChargingStation {
         this.status = status;
     }
 
-
+    public int getNumberOfChargingPoints() {
+        return this.stationChargerTypes.size();
+    }
 }
 
 

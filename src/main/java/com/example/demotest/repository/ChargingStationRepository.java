@@ -7,5 +7,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface ChargingStationRepository extends JpaRepository<ChargingStation, UUID> {
-    Optional<ChargingStation> findChargingStationById(UUID id);
+
 }

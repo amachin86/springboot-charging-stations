@@ -3,6 +3,8 @@ package com.example.demotest.controller;
 import com.example.demotest.dto.APIResponse;
 import com.example.demotest.dto.request.ChargingStationRequest;
 import com.example.demotest.dto.response.ChargingStationResponse;
+import com.example.demotest.entity.ChargingStation;
+import com.example.demotest.repository.ChargingStationRepository;
 import com.example.demotest.service.ChargingStationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,17 +22,30 @@ public class ChargingStationController {
 
     @Autowired
     private ChargingStationService service;
+    @Autowired
+    private ChargingStationRepository repository;
 
     @GetMapping
-    public List<ChargingStationResponse> getAllChargingStations() {
-        return service.findAll();
+    public ResponseEntity<APIResponse> getAllChargingStations() {
+
+        List<ChargingStationResponse> response = service.findAll();
+
+        APIResponse<List<ChargingStationResponse>> responseDTO = APIResponse.<List<ChargingStationResponse>>builder()
+                .status("Success")
+                .results(response)
+                .build();
+
+
+        return ResponseEntity.ok(responseDTO);
+
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<APIResponse> getChargingStationById(@PathVariable UUID id) {
         ChargingStationResponse chargingStation = service.ChargingStationById(id);
 
-        if (chargingStation == null) {
+
+       if (chargingStation == null) {
             return ResponseEntity.notFound().build();
         }
         APIResponse<ChargingStationResponse> responseDTO = APIResponse.<ChargingStationResponse>builder()
@@ -42,12 +57,13 @@ public class ChargingStationController {
     }
 
     @PostMapping
-    public ResponseEntity<APIResponse> createChargingStation(@RequestBody ChargingStationRequest chargingStation) {
+    public ResponseEntity<APIResponse> createChargingStation(@RequestBody ChargingStation chargingStation) {
 
-        ChargingStationResponse chargingStationResponse = service.save(chargingStation);
+        //ChargingStationResponse chargingStationResponse = service.save(chargingStation);
+        ChargingStation chargingStationResponse = repository.saveAndFlush(chargingStation);
         log.info("ChargingStationController:createChargingStation request body {}", chargingStation);
 
-        APIResponse<ChargingStationResponse> responseDTO = APIResponse.<ChargingStationResponse>builder()
+        APIResponse<ChargingStation> responseDTO = APIResponse.<ChargingStation>builder()
                 .status("Success")
                 .results(chargingStationResponse)
                 .build();

@@ -14,6 +14,7 @@ public class MapperUtils {
 
         Set<StationChargerTypeResponse> chargingStationList  = chargingStation.getStationChargerTypes().stream().map(MapperUtils::convertDroneToStationChargerTypeResponse).collect(Collectors.toSet());
         return ChargingStationResponse.builder()
+                .id(chargingStation.getId())
                 .stationChargerTypes(chargingStationList)
                 .chargerType(chargingStation.getChargerType().toString())
                 .status(chargingStation.getStatus().toString())
