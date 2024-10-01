@@ -74,6 +74,13 @@
             <version>0.11.5</version>
         </dependency>
 
+        <!-- Dozer Mapper   -->
+        <dependency>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer</artifactId>
+            <version>5.5.1</version>
+        </dependency>
+
         <!--
         The JUnit 5 is composed of two components, such as:
 
