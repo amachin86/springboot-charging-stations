@@ -4,16 +4,19 @@ import com.example.demotest.dto.request.ChargingStationRequest;
 import com.example.demotest.dto.response.ChargingStationResponse;
 import com.example.demotest.entity.ChargingStation;
 import com.example.demotest.repository.ChargingStationRepository;
+import com.example.demotest.utils.MapperUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.dozer.Mapper;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor //injection dependencies for constructor
@@ -24,15 +27,7 @@ public class ChargingStationService {
 
     private final Mapper dozerMapper;
 
-    @Cacheable("chargingStations")
-    public List<ChargingStation> findAll() {
-        return repository.findAll();
-    }
 
-    @Cacheable("chargingStation")
-    public Optional<ChargingStation> findById(UUID id) {
-        return repository.findById(id);
-    }
     @Transactional
     public ChargingStationResponse save(ChargingStationRequest chargingStation) {
         ChargingStationResponse chargingStationResponse = null;
@@ -61,7 +56,7 @@ public class ChargingStationService {
         try {
             log.debug("ChargingStationService::update request parameters id {} and Charging Station {}", id, chargingStation);
             ChargingStation saveStation = dozerMapper.map(chargingStation, ChargingStation.class);
-            saveStation.setId(id);
+            saveStation.setId(chanStation.getId());
             ChargingStation droneResp = repository.save(saveStation);
             chargingStationResponse = dozerMapper.map(droneResp, ChargingStationResponse.class);
             log.debug("ChargingStationService::updateDrone receive response from Database {}", chargingStationResponse);
@@ -93,6 +88,33 @@ public class ChargingStationService {
         log.info("ChargingStationService::deleteById execution ended.");
         return chargingStationResponse;
 
+    }
+
+    @Cacheable("chargingStation")
+    public ChargingStationResponse ChargingStationById(UUID id) {
+
+        ChargingStationResponse chargingStationResponse = null;
+        log.info("ChargingStationService::ChargingStationById execution started.");
+
+        ChargingStation ChargingStationRes = repository.findChargingStationById(id)
+                .orElseThrow(() -> new RuntimeException("Charging Station with id " + id + " not found"));
+
+        chargingStationResponse = dozerMapper.map(ChargingStationRes, ChargingStationResponse.class);
+        log.debug("ChargingStationService:ChargingStationById retrieving drones from the Database {}", chargingStationResponse);
+
+        log.info("ChargingStationService:ChargingStationById execution ended.");
+        return chargingStationResponse;
+
+    }
+
+    @Cacheable("chargingStation")
+    public List<ChargingStationResponse> findAll() {
+        return repository.findAll().stream().map(MapperUtils::convertDroneToChargingStationResponse).collect(Collectors.toList());
+    }
+
+    @Cacheable("chargingStation")
+    public Page<ChargingStationResponse> findAll(Pageable pageable) {
+        return repository.findAll(pageable).map(MapperUtils::convertDroneToChargingStationResponse);
     }
 }
 

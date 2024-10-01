@@ -3,7 +3,6 @@ package com.example.demotest.controller;
 import com.example.demotest.dto.APIResponse;
 import com.example.demotest.dto.request.ChargingStationRequest;
 import com.example.demotest.dto.response.ChargingStationResponse;
-import com.example.demotest.entity.ChargingStation;
 import com.example.demotest.service.ChargingStationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -24,15 +22,23 @@ public class ChargingStationController {
     private ChargingStationService service;
 
     @GetMapping
-    public List<ChargingStation> getAllChargingStations() {
+    public List<ChargingStationResponse> getAllChargingStations() {
         return service.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ChargingStation> getChargingStationById(@PathVariable UUID id) {
-        Optional<ChargingStation> chargingStation = service.findById(id);
-        return chargingStation.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<APIResponse> getChargingStationById(@PathVariable UUID id) {
+        ChargingStationResponse chargingStation = service.ChargingStationById(id);
+
+        if (chargingStation == null) {
+            return ResponseEntity.notFound().build();
+        }
+        APIResponse<ChargingStationResponse> responseDTO = APIResponse.<ChargingStationResponse>builder()
+                .status("Success")
+                .results(chargingStation)
+                .build();
+        log.info("ChargingStationController:getChargingStationById by Drone id {} response {}", id, responseDTO);
+        return ResponseEntity.ok(responseDTO);
     }
 
     @PostMapping

@@ -1,5 +1,6 @@
 package com.example.demotest.dto.response;
 
+import com.example.demotest.entity.Location;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class ChargingStationResponse {
     private String chargerType;
     private int numberOfChargingPoints;
     private String status;
+    private Location location;
 
     Set<StationChargerTypeResponse> stationChargerTypes;
 
