@@ -45,7 +45,7 @@ public class ChargingStationService {
             log.error("Exception occurred while persisting Charging Station to Database, Exception message {}", ex.getMessage());
             throw new RuntimeException("Exception occurred while created a new Charging Station");
         }
-        log.info("DroneServiceImpl::save execution ended.");
+        log.info("Charging StationerviceImpl::save execution ended.");
         return chargingStationResponse;
     }
 
@@ -78,15 +78,15 @@ public class ChargingStationService {
         ChargingStationResponse chargingStationResponse = null;
         log.info("ChargingStationService::deleteById execution started.");
 
-        Optional<ChargingStation> chargingStationResp = repository.findById(id);
+        Optional<ChargingStation> chargingStationModel = repository.findById(id);
         //.orElseThrow(() -> new RuntimeException("Charging Station with id " + id + " not found"));
-        if (!chargingStationResp.isPresent())
+        if (!chargingStationModel.isPresent())
             return null;
         try {
-            log.debug("DroneServiceImpl::deleteById request parameters id {}", id);
+            log.debug("Charging StationerviceImpl::deleteById request parameters id {}", id);
 
             repository.deleteById(id);
-            chargingStationResponse = dozerMapper.map(chargingStationResp, ChargingStationResponse.class);
+            chargingStationResponse = dozerMapper.map(chargingStationModel.get(), ChargingStationResponse.class);
             log.debug("ChargingStationService::deleteById receive response from Database {}", chargingStationResponse);
         } catch (Exception ex) {
             log.error("Exception occurred while updating Charging Station to Database, Exception message {}", ex.getMessage());
@@ -104,14 +104,15 @@ public class ChargingStationService {
         log.info("ChargingStationService::ChargingStationById execution started.");
 
 
-        Optional<ChargingStation> chargingStationResp = repository.findById(id);
+        Optional<ChargingStation> chargingStationModel = repository.findById(id);
         //.orElseThrow(() -> new RuntimeException("Charging Station with id " + id + " not found"));
-        if (!chargingStationResp.isPresent())
+        if (!chargingStationModel.isPresent())
             return null;
 
-
-        chargingStationResponse = dozerMapper.map(chargingStationResp, ChargingStationResponse.class);
-        log.debug("ChargingStationService:ChargingStationById retrieving drones from the Database {}", chargingStationResponse);
+        log.error("ChargingStationService:ChargingStationById retrieving Charging Station from the Database {}", chargingStationModel.get().toString());
+        
+        chargingStationResponse = dozerMapper.map(chargingStationModel.get(), ChargingStationResponse.class);
+        log.debug("ChargingStationService:ChargingStationById retrieving Charging Station DTO {}", chargingStationResponse);
 
         log.info("ChargingStationService:ChargingStationById execution ended.");
         return chargingStationResponse;

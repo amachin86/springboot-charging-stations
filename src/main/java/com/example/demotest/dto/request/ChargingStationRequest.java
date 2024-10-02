@@ -17,7 +17,7 @@ import java.util.Set;
 @Builder
 public class ChargingStationRequest {
     private String chargerType;
-    private int numberOfChargingPoints;
+    //private int numberOfChargingPoints;
     private String status;
     private Location location;
 

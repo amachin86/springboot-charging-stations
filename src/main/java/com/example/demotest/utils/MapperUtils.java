@@ -14,7 +14,7 @@ public class MapperUtils {
 
         Set<StationChargerTypeResponse> chargingStationList  = chargingStation.getStationChargerTypes().stream().map(MapperUtils::convertStationChargerTypeToStationChargerTypeResponse).collect(Collectors.toSet());
         return ChargingStationResponse.builder()
-                .id(chargingStation.getId())
+                .id(chargingStation.getId().toString())
                 .stationChargerTypes(chargingStationList)
                 .chargerType(chargingStation.getChargerType().toString())
                 .status(chargingStation.getStatus().toString())
@@ -26,7 +26,6 @@ public class MapperUtils {
     public static StationChargerTypeResponse convertStationChargerTypeToStationChargerTypeResponse(StationChargerType stationChargerType){
         return StationChargerTypeResponse.builder()
                 .id(stationChargerType.getId())
-                .type(stationChargerType.getType())
                 .chargingStation(stationChargerType.getChargingStation())
                 .power_levels(stationChargerType.getPower_levels())
                 .build();

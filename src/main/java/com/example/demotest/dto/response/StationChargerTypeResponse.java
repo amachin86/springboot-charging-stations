@@ -15,7 +15,6 @@ import lombok.ToString;
 public class StationChargerTypeResponse {
 
     private Long id;
-    private ChargerType type;
     private double power_levels;
     private ChargingStation chargingStation;
 }

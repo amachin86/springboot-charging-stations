@@ -13,7 +13,6 @@ import lombok.ToString;
 @Builder
 public class StationChargerTypeRequest {
     private Long id;
-    private ChargerType type;
     private double power_levels;
     private ChargingStation chargingStation;
 }

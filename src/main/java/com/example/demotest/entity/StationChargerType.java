@@ -16,9 +16,6 @@ public class StationChargerType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private ChargerType type;
-
     private double power_levels;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

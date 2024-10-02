@@ -16,7 +16,7 @@ import java.util.UUID;
 @ToString
 @Builder
 public class ChargingStationResponse {
-    private UUID id;
+    private String id;
     private String chargerType;
     private int numberOfChargingPoints;
     private String status;

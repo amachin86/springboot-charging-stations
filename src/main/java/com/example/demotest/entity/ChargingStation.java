@@ -42,7 +42,7 @@ public class ChargingStation {
     private Set<StationChargerType> stationChargerTypes = new HashSet<>();
 
     //contable
-    private int numberOfChargingPoints;
+    //private int numberOfChargingPoints;
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -53,7 +53,7 @@ public class ChargingStation {
             stationChargerType.setChargingStation(this);
         }
         //update numberOfChargingPoints
-        numberOfChargingPoints = stationChargerTypes.size();
+       // numberOfChargingPoints = stationChargerTypes.size();
     }
 
     public void setId(UUID id) {
