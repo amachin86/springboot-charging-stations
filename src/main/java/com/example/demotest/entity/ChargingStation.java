@@ -1,5 +1,6 @@
 package com.example.demotest.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.Type;
 
@@ -38,11 +39,12 @@ public class ChargingStation {
     @Enumerated(EnumType.STRING)
     private ChargerType chargerType;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "chargingStation", cascade = CascadeType.ALL)
     private Set<StationChargerType> stationChargerTypes = new HashSet<>();
 
     //contable
-    //private int numberOfChargingPoints;
+     private int numberOfChargingPoints;
 
     @Enumerated(EnumType.STRING)
     private Status status;

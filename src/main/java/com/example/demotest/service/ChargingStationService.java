@@ -111,7 +111,7 @@ public class ChargingStationService {
 
         log.error("ChargingStationService:ChargingStationById retrieving Charging Station from the Database {}", chargingStationModel.get().toString());
         
-        chargingStationResponse = dozerMapper.map(chargingStationModel.get(), ChargingStationResponse.class);
+        chargingStationResponse = MapperUtils.convertChargingStationToChargingStationResponse(chargingStationModel.get());
         log.debug("ChargingStationService:ChargingStationById retrieving Charging Station DTO {}", chargingStationResponse);
 
         log.info("ChargingStationService:ChargingStationById execution ended.");
@@ -121,7 +121,8 @@ public class ChargingStationService {
 
     @Cacheable("chargingStation")
     public List<ChargingStationResponse> findAll() {
-        return repository.findAll().stream().map(MapperUtils::convertChargingStationToChargingStationResponse).collect(Collectors.toList());
+         return repository.findAll().stream().map(MapperUtils::convertChargingStationToChargingStationResponse).collect(Collectors.toList());
+         //return repository.findAll();
     }
 
     @Cacheable("chargingStation")

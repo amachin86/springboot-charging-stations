@@ -28,8 +28,6 @@ public class ChargingStationResponse {
     public ChargingStationResponse(){
         stationChargerTypes = new HashSet<>();
     }
-    public int getNumberOfChargingPoints() {
-        return stationChargerTypes.size();
-    }
+
 
 }

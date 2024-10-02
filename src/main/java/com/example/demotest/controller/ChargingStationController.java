@@ -85,7 +85,7 @@ public class ChargingStationController {
         log.info("ChargingStationController:updateChargingStation request body {}", chargingStation);
 
         APIResponse<ChargingStationResponse> responseDTO = APIResponse.<ChargingStationResponse>builder()
-                .status("Success")
+                .status("Success Update")
                 .results(chargingStationResponse)
                 .build();
 
@@ -103,7 +103,7 @@ public class ChargingStationController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         APIResponse<ChargingStationResponse> responseDTO = APIResponse.<ChargingStationResponse>builder()
-                .status("Success")
+                .status("Success Delete")
                 .results(cahnStationResponse)
                 .build();
 

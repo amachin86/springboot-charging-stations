@@ -11,6 +11,7 @@ import com.example.demotest.repository.ChargingStationRepository;
 import com.example.demotest.repository.StationChargerTypeRepository;
 import com.example.demotest.service.ChargingStationService;
 import com.example.demotest.service.StationChargerTypeService;
+import com.example.demotest.utils.MapperUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -57,18 +58,21 @@ public class StationChargeTypeController {
                 .status("Success")
                 .results(StationChargerType)
                 .build();
-        log.info("StationChargerTypeController:getStationChargerTypeById by Drone id {} response {}", id, responseDTO);
+        log.info("StationChargerTypeController:getStationChargerTypeById by Station Charger Type id {} response {}", id, responseDTO);
         return ResponseEntity.ok(responseDTO);
     }
 
     @PostMapping
-    public ResponseEntity<APIResponse> createStationChargerType(@RequestBody StationChargerType StationChargerType) {
+    public ResponseEntity<APIResponse> createStationChargerType(@RequestBody StationChargerTypeRequest StationChargerType) {
 
-        //StationChargerTypeResponse StationChargerTypeResponse = service.save(StationChargerType);
-        StationChargerType StationChargerTypeResponse = repository.saveAndFlush(StationChargerType);
-        log.info("StationChargerTypeController:createStationChargerType request body {}", StationChargerType);
+        StationChargerTypeResponse StationChargerTypeResponse = service.save(StationChargerType);
+        //StationChargerType stationChargerTypeModel = repository.saveAndFlush(StationChargerType);
+        //log.info("StationChargerTypeController:createStationChargerType request body {}", stationChargerTypeModel.getChargingStation().getLocation());
 
-        APIResponse<StationChargerType> responseDTO = APIResponse.<StationChargerType>builder()
+        /*StationChargerTypeResponse stationChargerTypeResponse =
+                MapperUtils.convertStationChargerTypeToStationChargerTypeResponse(stationChargerTypeModel);*/
+
+        APIResponse<StationChargerTypeResponse> responseDTO = APIResponse.<StationChargerTypeResponse>builder()
                 .status("Success")
                 .results(StationChargerTypeResponse)
                 .build();
@@ -89,7 +93,7 @@ public class StationChargeTypeController {
         log.info("StationChargerTypeController:updateStationChargerType request body {}", StationChargerType);
 
         APIResponse<StationChargerTypeResponse> responseDTO = APIResponse.<StationChargerTypeResponse>builder()
-                .status("Success")
+                .status("Success Update")
                 .results(StationChargerTypeResponse)
                 .build();
 
@@ -100,15 +104,15 @@ public class StationChargeTypeController {
     @DeleteMapping("/{id}")
     public ResponseEntity<APIResponse> deleteStationChargerType(@PathVariable Long id) {
 
-        log.info("StationChargerTypeController:deleteStationChargerType Drone id {} response {}", id);
+        log.info("StationChargerTypeController:deleteStationChargerType Station Charger Type id {} response {}", id);
 
-        StationChargerTypeResponse cahnStationResponse = service.deleteById(id);
-        if (cahnStationResponse == null) {
+        StationChargerTypeResponse stationChargeTypeResponse = service.deleteById(id);
+        if (stationChargeTypeResponse == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         APIResponse<StationChargerTypeResponse> responseDTO = APIResponse.<StationChargerTypeResponse>builder()
-                .status("Success")
-                .results(cahnStationResponse)
+                .status("Success Delete")
+                .results(stationChargeTypeResponse)
                 .build();
 
         log.info("StationChargerTypeController:deleteStationChargerType Charging Station id {} response {}", id, responseDTO);

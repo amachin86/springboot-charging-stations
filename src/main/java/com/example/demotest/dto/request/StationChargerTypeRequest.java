@@ -12,7 +12,6 @@ import lombok.ToString;
 @ToString
 @Builder
 public class StationChargerTypeRequest {
-    private Long id;
     private double power_levels;
     private ChargingStation chargingStation;
 }

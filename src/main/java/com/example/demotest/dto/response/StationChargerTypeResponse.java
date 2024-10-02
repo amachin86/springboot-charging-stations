@@ -16,5 +16,5 @@ public class StationChargerTypeResponse {
 
     private Long id;
     private double power_levels;
-    private ChargingStation chargingStation;
+    //private ChargingStationResponse chargingStation;
 }

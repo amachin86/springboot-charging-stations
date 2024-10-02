@@ -36,15 +36,24 @@ public class StationChargerTypeService {
     @Transactional
     public StationChargerTypeResponse save(StationChargerTypeRequest chargingStationRequest) {
         UUID chargingStationId = chargingStationRequest.getChargingStation().getId();
-        Optional<ChargingStation> changingStation = chargingStationRepository.findById(chargingStationId);
+        Optional<ChargingStation> changingStationModel = chargingStationRepository.findById(chargingStationId);
                 //.orElseThrow(() -> new RuntimeException("Charging Station with id " + chargingStationId + " not found"));
-        if (!changingStation.isPresent())
+        if (!changingStationModel.isPresent())
             return null;
 
-        StationChargerType stationChargerType = dozerMapper.map(chargingStationRequest, StationChargerType.class);
-        stationChargerType.setChargingStation(changingStation.get());
-        StationChargerType stationChargerTypeResp = stationChargerTypeRepository.saveAndFlush(stationChargerType);
-        StationChargerTypeResponse stationChargerTypeResponse = dozerMapper.map(stationChargerTypeResp, StationChargerTypeResponse.class);
+        log.info("Changing Station Model {}", changingStationModel.get().getId());
+
+        StationChargerType stationChargerType = StationChargerType.builder()
+                .chargingStation(chargingStationRequest.getChargingStation())
+                .power_levels(chargingStationRequest.getPower_levels())
+                .build();
+
+        //StationChargerType stationChargerType = dozerMapper.map(chargingStationRequest, StationChargerType.class);
+        stationChargerType.setChargingStation(changingStationModel.get());
+        StationChargerType stationChargerTypeModel = stationChargerTypeRepository.saveAndFlush(stationChargerType);
+
+        StationChargerTypeResponse stationChargerTypeResponse =
+                MapperUtils.convertStationChargerTypeToStationChargerTypeResponse(stationChargerTypeModel);
 
         return stationChargerTypeResponse;
 
@@ -63,13 +72,18 @@ public class StationChargerTypeService {
                // .orElseThrow(() -> new RuntimeException("Charging Station with id " + chargingStationId + " not found"));
         if (!changingStationtype.isPresent()) return null;
 
-        StationChargerType stationChargerType = dozerMapper.map(chargingStationRequest, StationChargerType.class);
+        StationChargerType stationChargerType = StationChargerType.builder()
+                .chargingStation(chargingStationRequest.getChargingStation())
+                .power_levels(chargingStationRequest.getPower_levels())
+                .build();
+        //StationChargerType stationChargerType = dozerMapper.map(chargingStationRequest, StationChargerType.class);
 
         stationChargerType.setChargingStation(changingStation.get());
         stationChargerType.setId(changingStationtype.get().getId());
 
-        StationChargerType stationChargerTypeResp = stationChargerTypeRepository.saveAndFlush(stationChargerType);
-        StationChargerTypeResponse stationChargerTypeResponse = dozerMapper.map(stationChargerTypeResp, StationChargerTypeResponse.class);
+        StationChargerType stationChargerTypeModel = stationChargerTypeRepository.saveAndFlush(stationChargerType);
+        StationChargerTypeResponse stationChargerTypeResponse =
+                MapperUtils.convertStationChargerTypeToStationChargerTypeResponse(stationChargerTypeModel);
 
         return stationChargerTypeResponse;
 
@@ -78,12 +92,13 @@ public class StationChargerTypeService {
     public StationChargerTypeResponse deleteById(Long id){
 
         log.info("StationChargerTypeService::deleteById execution started.");
-        Optional<StationChargerType> stationChargerType = stationChargerTypeRepository.findById(id);
+        Optional<StationChargerType> stationChargerTypeModel = stationChargerTypeRepository.findById(id);
         //.orElseThrow(() -> new RuntimeException("Charging Station with id " + chargingStationId + " not found"));
-        if (!stationChargerType.isPresent())
+        if (!stationChargerTypeModel.isPresent())
             return null;
-        stationChargerTypeRepository.delete(stationChargerType.get());
-        StationChargerTypeResponse stationChargerTypeResponse = dozerMapper.map(stationChargerType, StationChargerTypeResponse.class);
+        stationChargerTypeRepository.delete(stationChargerTypeModel.get());
+        StationChargerTypeResponse stationChargerTypeResponse =
+                MapperUtils.convertStationChargerTypeToStationChargerTypeResponse(stationChargerTypeModel.get());
 
         log.info("StationChargerTypeService::deleteById execution ended.");
         return stationChargerTypeResponse;
@@ -93,13 +108,13 @@ public class StationChargerTypeService {
     public StationChargerTypeResponse StationChargerTypeById(Long id){
 
         log.info("StationChargerTypeService::StationChargerTypeById execution started.");
-        Optional<StationChargerType> stationChargerType = stationChargerTypeRepository.findById(id);
+        Optional<StationChargerType> stationChargerTypeModel = stationChargerTypeRepository.findById(id);
         //.orElseThrow(() -> new RuntimeException("Charging Station with id " + chargingStationId + " not found"));
-        if (!stationChargerType.isPresent())
+        if (!stationChargerTypeModel.isPresent())
             return null;
 
-        StationChargerTypeResponse stationChargerTypeResponse = dozerMapper.map(stationChargerType, StationChargerTypeResponse.class);
-
+        StationChargerTypeResponse stationChargerTypeResponse =
+                MapperUtils.convertStationChargerTypeToStationChargerTypeResponse(stationChargerTypeModel.get());
         log.info("StationChargerTypeService::StationChargerTypeById execution ended.");
         return stationChargerTypeResponse;
 
