@@ -20,6 +20,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .antMatchers(HttpMethod.POST, "/api/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/charging-stations").permitAll()
+                .antMatchers(HttpMethod.PUT, "/api/charging-stations/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/api/charging-stations/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/type/charging-stations").permitAll()
+                .antMatchers(HttpMethod.PUT, "/api/type/charging-stations/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/api/type/charging-stations/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/").permitAll()
                 .antMatchers("/").permitAll();
         return httpSecurity.build();

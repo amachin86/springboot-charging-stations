@@ -10,9 +10,9 @@ import java.util.stream.Collectors;
 
 public class MapperUtils {
 
-    public static ChargingStationResponse convertDroneToChargingStationResponse(ChargingStation chargingStation) {
+    public static ChargingStationResponse convertChargingStationToChargingStationResponse(ChargingStation chargingStation) {
 
-        Set<StationChargerTypeResponse> chargingStationList  = chargingStation.getStationChargerTypes().stream().map(MapperUtils::convertDroneToStationChargerTypeResponse).collect(Collectors.toSet());
+        Set<StationChargerTypeResponse> chargingStationList  = chargingStation.getStationChargerTypes().stream().map(MapperUtils::convertStationChargerTypeToStationChargerTypeResponse).collect(Collectors.toSet());
         return ChargingStationResponse.builder()
                 .id(chargingStation.getId())
                 .stationChargerTypes(chargingStationList)
@@ -23,7 +23,7 @@ public class MapperUtils {
                 .build();
     }
 
-    public static StationChargerTypeResponse convertDroneToStationChargerTypeResponse(StationChargerType stationChargerType){
+    public static StationChargerTypeResponse convertStationChargerTypeToStationChargerTypeResponse(StationChargerType stationChargerType){
         return StationChargerTypeResponse.builder()
                 .id(stationChargerType.getId())
                 .type(stationChargerType.getType())
@@ -31,4 +31,6 @@ public class MapperUtils {
                 .power_levels(stationChargerType.getPower_levels())
                 .build();
     }
+
+
 }

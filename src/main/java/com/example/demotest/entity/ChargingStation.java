@@ -1,8 +1,10 @@
 package com.example.demotest.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.sql.Types;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -17,6 +19,7 @@ public class ChargingStation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID id;
 
     @Embedded

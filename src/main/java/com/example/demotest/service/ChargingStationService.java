@@ -2,9 +2,7 @@ package com.example.demotest.service;
 
 import com.example.demotest.dto.request.ChargingStationRequest;
 import com.example.demotest.dto.response.ChargingStationResponse;
-import com.example.demotest.entity.ChargerType;
 import com.example.demotest.entity.ChargingStation;
-import com.example.demotest.entity.Status;
 import com.example.demotest.repository.ChargingStationRepository;
 import com.example.demotest.utils.MapperUtils;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +14,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -56,12 +54,14 @@ public class ChargingStationService {
         ChargingStationResponse chargingStationResponse = null;
         log.info("ChargingStationService::update execution started.");
 
-        ChargingStation chanStation = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Charging Station with id " + id + " not found"));
+        Optional<ChargingStation> chargingStationResp = repository.findById(id);
+        //.orElseThrow(() -> new RuntimeException("Charging Station with id " + id + " not found"));
+        if (!chargingStationResp.isPresent())
+            return null;
         try {
             log.debug("ChargingStationService::update request parameters id {} and Charging Station {}", id, chargingStation);
             ChargingStation saveStation = dozerMapper.map(chargingStation, ChargingStation.class);
-            saveStation.setId(chanStation.getId());
+            saveStation.setId(chargingStationResp.get().getId());
             ChargingStation droneResp = repository.save(saveStation);
             chargingStationResponse = dozerMapper.map(droneResp, ChargingStationResponse.class);
             log.debug("ChargingStationService::updateDrone receive response from Database {}", chargingStationResponse);
@@ -78,13 +78,15 @@ public class ChargingStationService {
         ChargingStationResponse chargingStationResponse = null;
         log.info("ChargingStationService::deleteById execution started.");
 
-        ChargingStation ChargingStationRes = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Charging Station with id " + id + " not found"));
+        Optional<ChargingStation> chargingStationResp = repository.findById(id);
+        //.orElseThrow(() -> new RuntimeException("Charging Station with id " + id + " not found"));
+        if (!chargingStationResp.isPresent())
+            return null;
         try {
             log.debug("DroneServiceImpl::deleteById request parameters id {}", id);
 
             repository.deleteById(id);
-            chargingStationResponse = dozerMapper.map(ChargingStationRes, ChargingStationResponse.class);
+            chargingStationResponse = dozerMapper.map(chargingStationResp, ChargingStationResponse.class);
             log.debug("ChargingStationService::deleteById receive response from Database {}", chargingStationResponse);
         } catch (Exception ex) {
             log.error("Exception occurred while updating Charging Station to Database, Exception message {}", ex.getMessage());
@@ -102,10 +104,13 @@ public class ChargingStationService {
         log.info("ChargingStationService::ChargingStationById execution started.");
 
 
-        ChargingStation ChargingStationRes = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Charging Station with id " + id + " not found"));
+        Optional<ChargingStation> chargingStationResp = repository.findById(id);
+        //.orElseThrow(() -> new RuntimeException("Charging Station with id " + id + " not found"));
+        if (!chargingStationResp.isPresent())
+            return null;
 
-        chargingStationResponse = dozerMapper.map(ChargingStationRes, ChargingStationResponse.class);
+
+        chargingStationResponse = dozerMapper.map(chargingStationResp, ChargingStationResponse.class);
         log.debug("ChargingStationService:ChargingStationById retrieving drones from the Database {}", chargingStationResponse);
 
         log.info("ChargingStationService:ChargingStationById execution ended.");
@@ -115,12 +120,12 @@ public class ChargingStationService {
 
     @Cacheable("chargingStation")
     public List<ChargingStationResponse> findAll() {
-        return repository.findAll().stream().map(MapperUtils::convertDroneToChargingStationResponse).collect(Collectors.toList());
+        return repository.findAll().stream().map(MapperUtils::convertChargingStationToChargingStationResponse).collect(Collectors.toList());
     }
 
     @Cacheable("chargingStation")
     public Page<ChargingStationResponse> findAll(Pageable pageable) {
-        return repository.findAll(pageable).map(MapperUtils::convertDroneToChargingStationResponse);
+        return repository.findAll(pageable).map(MapperUtils::convertChargingStationToChargingStationResponse);
     }
 }
 

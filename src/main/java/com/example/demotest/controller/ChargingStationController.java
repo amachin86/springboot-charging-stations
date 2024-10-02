@@ -8,6 +8,7 @@ import com.example.demotest.repository.ChargingStationRepository;
 import com.example.demotest.service.ChargingStationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -77,7 +78,10 @@ public class ChargingStationController {
     public ResponseEntity<APIResponse> updateChargingStation(@PathVariable UUID id, @RequestBody ChargingStationRequest chargingStation) {
 
         ChargingStationResponse chargingStationResponse = service.update(id, chargingStation);
-
+        if (chargingStationResponse == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            //return ResponseEntity.notFound().build();
+        }
         log.info("ChargingStationController:updateChargingStation request body {}", chargingStation);
 
         APIResponse<ChargingStationResponse> responseDTO = APIResponse.<ChargingStationResponse>builder()
@@ -96,12 +100,13 @@ public class ChargingStationController {
 
         ChargingStationResponse cahnStationResponse = service.deleteById(id);
         if (cahnStationResponse == null) {
-            return ResponseEntity.notFound().build();
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         APIResponse<ChargingStationResponse> responseDTO = APIResponse.<ChargingStationResponse>builder()
                 .status("Success")
                 .results(cahnStationResponse)
                 .build();
+
         log.info("ChargingStationController:deleteChargingStation Charging Station id {} response {}", id, responseDTO);
         return ResponseEntity.ok(responseDTO);
     }
