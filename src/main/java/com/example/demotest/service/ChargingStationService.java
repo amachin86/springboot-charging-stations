@@ -3,6 +3,7 @@ package com.example.demotest.service;
 import com.example.demotest.dto.request.ChargingStationRequest;
 import com.example.demotest.dto.response.ChargingStationResponse;
 import com.example.demotest.entity.ChargingStation;
+import com.example.demotest.entity.Status;
 import com.example.demotest.repository.ChargingStationRepository;
 import com.example.demotest.utils.MapperUtils;
 import lombok.RequiredArgsConstructor;
@@ -103,7 +104,6 @@ public class ChargingStationService {
         }
         log.info("ChargingStationService::deleteById execution ended.");
         return chargingStationResponse;
-
     }
 
     @Cacheable("chargingStation")
@@ -125,7 +125,6 @@ public class ChargingStationService {
 
         log.info("ChargingStationService:ChargingStationById execution ended.");
         return chargingStationResponse;
-
     }
 
     @Cacheable("chargingStation")

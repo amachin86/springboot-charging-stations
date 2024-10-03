@@ -4,10 +4,12 @@ import com.example.demotest.dto.APIResponse;
 import com.example.demotest.dto.request.ChargingStationRequest;
 import com.example.demotest.dto.response.ChargingStationResponse;
 import com.example.demotest.entity.ChargingStation;
+import com.example.demotest.entity.Status;
 import com.example.demotest.repository.ChargingStationRepository;
 import com.example.demotest.service.ChargingStationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,6 +54,23 @@ public class ChargingStationController {
         APIResponse<ChargingStationResponse> responseDTO = APIResponse.<ChargingStationResponse>builder()
                 .status("Success")
                 .results(chargingStation)
+                .build();
+        log.info("ChargingStationController:getChargingStationById by Charging Station id {} response {}", id, responseDTO);
+        return ResponseEntity.ok(responseDTO);
+    }
+
+    @Cacheable("stationStatus")
+    @GetMapping("/{id}/status")
+    public ResponseEntity<APIResponse> getStatus(@PathVariable UUID id) {
+
+        ChargingStationResponse chargingStation = service.ChargingStationById(id);
+
+        if (chargingStation == null) {
+            return ResponseEntity.notFound().build();
+        }
+        APIResponse<String> responseDTO = APIResponse.<String>builder()
+                .status("Success")
+                .results(chargingStation.getStatus())
                 .build();
         log.info("ChargingStationController:getChargingStationById by Charging Station id {} response {}", id, responseDTO);
         return ResponseEntity.ok(responseDTO);
