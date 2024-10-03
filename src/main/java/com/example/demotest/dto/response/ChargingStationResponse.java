@@ -21,6 +21,7 @@ public class ChargingStationResponse {
     private int numberOfChargingPoints;
     private String status;
     private Location location;
+    private double chargingCapacity;
 
     Set<StationChargerTypeResponse> stationChargerTypes;
 

@@ -65,16 +65,16 @@ public class StationChargeTypeController {
     @PostMapping
     public ResponseEntity<APIResponse> createStationChargerType(@RequestBody StationChargerTypeRequest StationChargerType) {
 
-        StationChargerTypeResponse StationChargerTypeResponse = service.save(StationChargerType);
+        StationChargerTypeResponse stationChargerTypeResponse = service.save(StationChargerType);
         //StationChargerType stationChargerTypeModel = repository.saveAndFlush(StationChargerType);
-        //log.info("StationChargerTypeController:createStationChargerType request body {}", stationChargerTypeModel.getChargingStation().getLocation());
-
-        /*StationChargerTypeResponse stationChargerTypeResponse =
-                MapperUtils.convertStationChargerTypeToStationChargerTypeResponse(stationChargerTypeModel);*/
+        log.info("StationChargerTypeController:createStationChargerType request body {}", StationChargerType);
+        if (stationChargerTypeResponse == null){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
 
         APIResponse<StationChargerTypeResponse> responseDTO = APIResponse.<StationChargerTypeResponse>builder()
                 .status("Success")
-                .results(StationChargerTypeResponse)
+                .results(stationChargerTypeResponse)
                 .build();
 
         log.info("StationChargerTypeController:createStationChargerType response {}", responseDTO);

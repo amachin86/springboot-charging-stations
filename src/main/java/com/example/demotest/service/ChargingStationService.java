@@ -13,7 +13,9 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -29,15 +31,15 @@ public class ChargingStationService {
     private final Mapper dozerMapper;
 
 
-    //@Transactional
-    public ChargingStationResponse save(ChargingStation chargingStation) {
+    @Transactional
+    public ChargingStationResponse save(ChargingStationRequest chargingStationRequest) {
         ChargingStationResponse chargingStationResponse = null;
         log.info("ChargingStationService::save execution started.");
         try {
-            log.debug("ChargingStationService::save request parameters {}", chargingStation);
-           // ChargingStation saveChargingStation = dozerMapper.map(chargingStation, ChargingStation.class);
+            log.debug("ChargingStationService::save request parameters {}", chargingStationRequest);
 
-            ChargingStation chanChargingStationResp = repository.saveAndFlush(chargingStation);
+            ChargingStation saveStation = MapperUtils.DTOToChangingStationModel(chargingStationRequest);
+            ChargingStation chanChargingStationResp = repository.saveAndFlush(saveStation);
 
             chargingStationResponse = dozerMapper.map(chanChargingStationResp, ChargingStationResponse.class);
             log.debug("ChargingStationService::save receive response from Database {}", chargingStationResponse);
@@ -49,7 +51,7 @@ public class ChargingStationService {
         return chargingStationResponse;
     }
 
-    public ChargingStationResponse update(UUID id, ChargingStationRequest chargingStation) {
+    public ChargingStationResponse update(UUID id, ChargingStationRequest chargingStationRequest) {
 
         ChargingStationResponse chargingStationResponse = null;
         log.info("ChargingStationService::update execution started.");
@@ -59,11 +61,16 @@ public class ChargingStationService {
         if (!chargingStationResp.isPresent())
             return null;
         try {
-            log.debug("ChargingStationService::update request parameters id {} and Charging Station {}", id, chargingStation);
-            ChargingStation saveStation = dozerMapper.map(chargingStation, ChargingStation.class);
-            saveStation.setId(chargingStationResp.get().getId());
-            ChargingStation droneResp = repository.save(saveStation);
-            chargingStationResponse = dozerMapper.map(droneResp, ChargingStationResponse.class);
+            log.debug("ChargingStationService::update request parameters id {} and Charging Station {}", id, chargingStationRequest);
+
+            ChargingStation saveStation = MapperUtils.DTOToChangingStationModel(chargingStationRequest);
+            //ChargingStation saveStation = dozerMapper.map(chargingStation, ChargingStation.class);
+
+            log.info("MAPPER****** {}" + saveStation.getLocation());
+
+            ChargingStation chargingStationModel = repository.save(saveStation);
+            chargingStationResponse  = MapperUtils.convertChargingStationToChargingStationResponse(chargingStationModel);
+
             log.debug("ChargingStationService::updateDrone receive response from Database {}", chargingStationResponse);
         } catch (Exception ex) {
             log.error("Exception occurred while updating Charging Station to Database, Exception message {}", ex.getMessage());
@@ -83,14 +90,16 @@ public class ChargingStationService {
         if (!chargingStationModel.isPresent())
             return null;
         try {
-            log.debug("Charging StationerviceImpl::deleteById request parameters id {}", id);
+            ChargingStation delete = chargingStationModel.get();
+            log.debug("Charging ChargingStationService::delete request parameters id {}", id);
 
-            repository.deleteById(id);
-            chargingStationResponse = dozerMapper.map(chargingStationModel.get(), ChargingStationResponse.class);
+            repository.delete(delete);
+
+            chargingStationResponse = MapperUtils.convertChargingStationToChargingStationResponse(chargingStationModel.get());
             log.debug("ChargingStationService::deleteById receive response from Database {}", chargingStationResponse);
         } catch (Exception ex) {
             log.error("Exception occurred while updating Charging Station to Database, Exception message {}", ex.getMessage());
-            throw new RuntimeException("Exception occurred while update Charging Station Service");
+            throw new RuntimeException("Exception occurred while delete Charging Station Service");
         }
         log.info("ChargingStationService::deleteById execution ended.");
         return chargingStationResponse;

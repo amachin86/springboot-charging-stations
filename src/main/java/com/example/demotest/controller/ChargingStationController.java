@@ -53,18 +53,18 @@ public class ChargingStationController {
                 .status("Success")
                 .results(chargingStation)
                 .build();
-        log.info("ChargingStationController:getChargingStationById by Drone id {} response {}", id, responseDTO);
+        log.info("ChargingStationController:getChargingStationById by Charging Station id {} response {}", id, responseDTO);
         return ResponseEntity.ok(responseDTO);
     }
 
     @PostMapping
-    public ResponseEntity<APIResponse> createChargingStation(@RequestBody ChargingStation chargingStation) {
+    public ResponseEntity<APIResponse> createChargingStation(@RequestBody ChargingStationRequest chargingStation) {
 
-        //ChargingStationResponse chargingStationResponse = service.save(chargingStation);
-        ChargingStation chargingStationResponse = repository.saveAndFlush(chargingStation);
+        ChargingStationResponse chargingStationResponse = service.save(chargingStation);
+        //ChargingStation chargingStationResponse = repository.saveAndFlush(chargingStation);
         log.info("ChargingStationController:createChargingStation request body {}", chargingStation);
 
-        APIResponse<ChargingStation> responseDTO = APIResponse.<ChargingStation>builder()
+        APIResponse<ChargingStationResponse> responseDTO = APIResponse.<ChargingStationResponse>builder()
                 .status("Success")
                 .results(chargingStationResponse)
                 .build();
@@ -96,15 +96,15 @@ public class ChargingStationController {
     @DeleteMapping("/{id}")
     public ResponseEntity<APIResponse> deleteChargingStation(@PathVariable UUID id) {
 
-        log.info("ChargingStationController:deleteChargingStation Drone id {} response {}", id);
+        log.info("ChargingStationController:deleteChargingStation Charging Station id {} response {}", id);
 
-        ChargingStationResponse cahnStationResponse = service.deleteById(id);
-        if (cahnStationResponse == null) {
+        ChargingStationResponse chargingStationResponse = service.deleteById(id);
+        if (chargingStationResponse == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         APIResponse<ChargingStationResponse> responseDTO = APIResponse.<ChargingStationResponse>builder()
                 .status("Success Delete")
-                .results(cahnStationResponse)
+                .results(chargingStationResponse)
                 .build();
 
         log.info("ChargingStationController:deleteChargingStation Charging Station id {} response {}", id, responseDTO);

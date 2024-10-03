@@ -35,6 +35,7 @@ public class StationChargerTypeService {
 
     @Transactional
     public StationChargerTypeResponse save(StationChargerTypeRequest chargingStationRequest) {
+
         UUID chargingStationId = chargingStationRequest.getChargingStation().getId();
         Optional<ChargingStation> changingStationModel = chargingStationRepository.findById(chargingStationId);
                 //.orElseThrow(() -> new RuntimeException("Charging Station with id " + chargingStationId + " not found"));
@@ -43,14 +44,12 @@ public class StationChargerTypeService {
 
         log.info("Changing Station Model {}", changingStationModel.get().getId());
 
-        StationChargerType stationChargerType = StationChargerType.builder()
-                .chargingStation(chargingStationRequest.getChargingStation())
-                .power_levels(chargingStationRequest.getPower_levels())
-                .build();
+        StationChargerType stationChargerType = MapperUtils.DTOToStationChargerType(chargingStationRequest);
 
         //StationChargerType stationChargerType = dozerMapper.map(chargingStationRequest, StationChargerType.class);
         stationChargerType.setChargingStation(changingStationModel.get());
         StationChargerType stationChargerTypeModel = stationChargerTypeRepository.saveAndFlush(stationChargerType);
+
 
         StationChargerTypeResponse stationChargerTypeResponse =
                 MapperUtils.convertStationChargerTypeToStationChargerTypeResponse(stationChargerTypeModel);
@@ -72,11 +71,7 @@ public class StationChargerTypeService {
                // .orElseThrow(() -> new RuntimeException("Charging Station with id " + chargingStationId + " not found"));
         if (!changingStationtype.isPresent()) return null;
 
-        StationChargerType stationChargerType = StationChargerType.builder()
-                .chargingStation(chargingStationRequest.getChargingStation())
-                .power_levels(chargingStationRequest.getPower_levels())
-                .build();
-        //StationChargerType stationChargerType = dozerMapper.map(chargingStationRequest, StationChargerType.class);
+        StationChargerType stationChargerType = MapperUtils.DTOToStationChargerType(chargingStationRequest);
 
         stationChargerType.setChargingStation(changingStation.get());
         stationChargerType.setId(changingStationtype.get().getId());

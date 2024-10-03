@@ -22,4 +22,7 @@ public class StationChargerType {
     @JoinColumn(name = "fk_station_id")
     @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     private ChargingStation chargingStation;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
 }

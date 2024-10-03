@@ -44,10 +44,7 @@ public class ChargingStation {
     private Set<StationChargerType> stationChargerTypes = new HashSet<>();
 
     //contable
-     private int numberOfChargingPoints;
-
-    @Enumerated(EnumType.STRING)
-    private Status status;
+     //private int numberOfChargingPoints;
 
     public void setStationChargerTypes(Set<StationChargerType> stationChargerTypes) {
         this.stationChargerTypes = stationChargerTypes;
@@ -70,12 +67,35 @@ public class ChargingStation {
         this.chargerType = chargerType;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
     public int getNumberOfChargingPoints() {
         return this.stationChargerTypes.size();
+    }
+
+    public Status getStatus(){
+        int count = getAvailableNumberOfChargingPoints();
+        return count > 0 ? Status.AVAILABLE : Status.IN_USE;
+    }
+
+    public int getAvailableNumberOfChargingPoints(){
+        Set<StationChargerType> stationChargerTypes = getStationChargerTypes();
+        int count = 0;
+        for (StationChargerType stationChargerType: stationChargerTypes){
+            if (stationChargerType.getStatus() == Status.AVAILABLE){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public double getChargingCapacity(){
+        Set<StationChargerType> stationChargerTypes = getStationChargerTypes();
+        int total = 0;
+        for (StationChargerType stationChargerType: stationChargerTypes){
+            if (stationChargerType.getStatus() == Status.AVAILABLE){
+                total += stationChargerType.getPower_levels();
+            }
+        }
+        return total;
     }
 }
 

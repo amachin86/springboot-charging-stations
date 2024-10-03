@@ -1,7 +1,9 @@
 package com.example.demotest.dto.request;
 
 import com.example.demotest.dto.response.StationChargerTypeResponse;
+import com.example.demotest.entity.ChargerType;
 import com.example.demotest.entity.Location;
+import com.example.demotest.entity.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,16 +18,13 @@ import java.util.Set;
 @ToString
 @Builder
 public class ChargingStationRequest {
-    private String chargerType;
-    //private int numberOfChargingPoints;
-    private String status;
+    private ChargerType chargerType;
     private Location location;
 
-    Set<StationChargerTypeResponse> stationChargerTypes;
-
-
+    /*Set<StationChargerTypeResponse> stationChargerTypes;
+    private int numberOfChargingPoints;
     public ChargingStationRequest(){
         stationChargerTypes = new HashSet<>();
-    }
+    }*/
 
 }
