@@ -1,0 +1,599 @@
+{
+	"info": {
+		"_postman_id": "473d5b7e-72d7-40a4-b2ad-f95072422b84",
+		"name": "SpringBoot-Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29894284"
+	},
+	"item": [
+		{
+			"name": "test-endpont",
+			"item": [
+				{
+					"name": "StationChargerType",
+					"item": [
+						{
+							"name": "create-charging-stations-type",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbWFAZ21haWwuY29tIiwiaWF0IjoxNzI4MDU5NjMwLCJleHAiOjE3MjgwNzc2MzB9.7C8iaUzHcFWMG5Yfj5m_ha9M7_mDgOh_NDORurQFTFheCAogRFcA3_9-Mb7fcf_hASwrtaT2k_j9xJu7jXq7Pw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"power_levels\": 50,\r\n    \"status\": \"AVAILABLE\",\r\n    \"chargingStation\":{\r\n       \"id\": \"75a252da-fc44-4409-8482-891ba5b36e2e\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9000/api/type/charging-stations",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"api",
+										"type",
+										"charging-stations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "list-charging-stations-type",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbWFAZ21haWwuY29tIiwiaWF0IjoxNzI4MDU5NjMwLCJleHAiOjE3MjgwNzc2MzB9.7C8iaUzHcFWMG5Yfj5m_ha9M7_mDgOh_NDORurQFTFheCAogRFcA3_9-Mb7fcf_hASwrtaT2k_j9xJu7jXq7Pw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"chargerType\": \"DC_FAST_CHARGER\",\r\n    \"status\": \"AVAILABLE\",\r\n    \"location\":{\r\n        \"address\": \"jdjhdshhshhs\",\r\n        \"latitude\": 78.8,\r\n        \"longitude\": 98\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9000/api/type/charging-stations",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"api",
+										"type",
+										"charging-stations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get-charging-stations-type",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"chargerType\": \"DC_FAST_CHARGER\",\r\n    \"status\": \"AVAILABLE\",\r\n    \"location\":{\r\n        \"address\": \"jdjhdshhshhs\",\r\n        \"latitude\": 78.8,\r\n        \"longitude\": 98\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9000/api/type/charging-stations/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"api",
+										"type",
+										"charging-stations",
+										"1"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete-charging-stations-type",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbWFAZ21haWwuY29tIiwiaWF0IjoxNzI4MDU5NjMwLCJleHAiOjE3MjgwNzc2MzB9.7C8iaUzHcFWMG5Yfj5m_ha9M7_mDgOh_NDORurQFTFheCAogRFcA3_9-Mb7fcf_hASwrtaT2k_j9xJu7jXq7Pw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"chargerType\": \"DC_FAST_CHARGER\",\r\n    \"status\": \"AVAILABLE\",\r\n    \"location\":{\r\n        \"address\": \"jdjhdshhshhs\",\r\n        \"latitude\": 78.8,\r\n        \"longitude\": 98\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9000/api/type/charging-stations/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"api",
+										"type",
+										"charging-stations",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update-charging-stations-type",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbWFAZ21haWwuY29tIiwiaWF0IjoxNzI4MDU5NjMwLCJleHAiOjE3MjgwNzc2MzB9.7C8iaUzHcFWMG5Yfj5m_ha9M7_mDgOh_NDORurQFTFheCAogRFcA3_9-Mb7fcf_hASwrtaT2k_j9xJu7jXq7Pw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"power_levels\": 60,\r\n    \"status\": \"IN_USE\",\r\n    \"chargingStation\":{\r\n       \"id\": \"75a252da-fc44-4409-8482-891ba5b36e2e\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9000/api/type/charging-stations/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"api",
+										"type",
+										"charging-stations",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Station",
+					"item": [
+						{
+							"name": "create-charging-stations",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbWFAZ21haWwuY29tIiwiaWF0IjoxNzI4MDU5NDIxLCJleHAiOjE3MjgwNzc0MjF9.8G2VxHBl5NIHauZ5HOGWvAJpF4IYwNaim1QtByfvBaXKZ5Vb8NT-monvREBn-sFjwNKnb-jskRz_O6WokXzQQw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"chargerType\": \"DC_FAST_CHARGER\",    \r\n    \"location\":{\r\n        \"address\": \"La Habana, Cuba\",\r\n        \"latitude\": 78.8,\r\n        \"longitude\": 98\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9000/api/charging-stations",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"api",
+										"charging-stations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "list-charging-stations",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbWFAZ21haWwuY29tIiwiaWF0IjoxNzI4MDU5NjMwLCJleHAiOjE3MjgwNzc2MzB9.7C8iaUzHcFWMG5Yfj5m_ha9M7_mDgOh_NDORurQFTFheCAogRFcA3_9-Mb7fcf_hASwrtaT2k_j9xJu7jXq7Pw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"chargerType\": \"DC_FAST_CHARGER\",\r\n    \"status\": \"AVAILABLE\",\r\n    \"location\":{\r\n        \"address\": \"jdjhdshhshhs\",\r\n        \"latitude\": 78.8,\r\n        \"longitude\": 98\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9000/api/charging-stations",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"api",
+										"charging-stations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get-charging-stations",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbWFAZ21haWwuY29tIiwiaWF0IjoxNzI4MDU5NjMwLCJleHAiOjE3MjgwNzc2MzB9.7C8iaUzHcFWMG5Yfj5m_ha9M7_mDgOh_NDORurQFTFheCAogRFcA3_9-Mb7fcf_hASwrtaT2k_j9xJu7jXq7Pw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"chargerType\": \"DC_FAST_CHARGER\",\r\n    \"status\": \"AVAILABLE\",\r\n    \"location\":{\r\n        \"address\": \"jdjhdshhshhs\",\r\n        \"latitude\": 78.8,\r\n        \"longitude\": 98\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9000/api/charging-stations/75a252da-fc44-4409-8482-891ba5b36e2e",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"api",
+										"charging-stations",
+										"75a252da-fc44-4409-8482-891ba5b36e2e"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get-charging-stations-status",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"chargerType\": \"DC_FAST_CHARGER\",\r\n    \"status\": \"AVAILABLE\",\r\n    \"location\":{\r\n        \"address\": \"jdjhdshhshhs\",\r\n        \"latitude\": 78.8,\r\n        \"longitude\": 98\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9000/api/charging-stations/fd5c2c45-04a7-4d5b-8aac-eb0215a562f4/status",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"api",
+										"charging-stations",
+										"fd5c2c45-04a7-4d5b-8aac-eb0215a562f4",
+										"status"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete-charging-stations",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbWFAZ21haWwuY29tIiwiaWF0IjoxNzI4MDU5NjMwLCJleHAiOjE3MjgwNzc2MzB9.7C8iaUzHcFWMG5Yfj5m_ha9M7_mDgOh_NDORurQFTFheCAogRFcA3_9-Mb7fcf_hASwrtaT2k_j9xJu7jXq7Pw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"chargerType\": \"DC_FAST_CHARGER\",\r\n    \"status\": \"AVAILABLE\",\r\n    \"location\":{\r\n        \"address\": \"jdjhdshhshhs\",\r\n        \"latitude\": 78.8,\r\n        \"longitude\": 98\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9000/api/charging-stations/c9837709-bcf6-4576-a54a-7b58c6fdb20a",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"api",
+										"charging-stations",
+										"c9837709-bcf6-4576-a54a-7b58c6fdb20a"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update-charging-stations",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbWFAZ21haWwuY29tIiwiaWF0IjoxNzI4MDU5NjMwLCJleHAiOjE3MjgwNzc2MzB9.7C8iaUzHcFWMG5Yfj5m_ha9M7_mDgOh_NDORurQFTFheCAogRFcA3_9-Mb7fcf_hASwrtaT2k_j9xJu7jXq7Pw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"chargerType\": \"DC_FAST_CHARGER\",    \r\n    \"location\":{\r\n        \"address\": \"Vedado, La Habana update\",\r\n        \"latitude\": 78.8,\r\n        \"longitude\": 100\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9000/api/charging-stations/75a252da-fc44-4409-8482-891ba5b36e2e",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"api",
+										"charging-stations",
+										"75a252da-fc44-4409-8482-891ba5b36e2e"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "createuser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n   \"name\": \"amachin\",\r\n   \"password\": \"123\",\r\n   \"email\": \"ama@gmail.com\",\r\n   \"roles\": \"ROLE_ADMIN\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/auth/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"auth",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"ama@gmail.com\",\r\n    \"password\": \"123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list-user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbWFAZ21haWwuY29tIiwiaWF0IjoxNzI4MDYwMjMxLCJleHAiOjE3MjgwNzgyMzF9.q4MgetWQLeub_5JayH6GA3EJB8_-bCKTiA2kNpFk8vikt1pu-fiwbdkI4F5hxlWr7RTdFQLwasluz-J9rNG8xw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "station_id",
+			"value": "d4a10533-e6c5-4a78-a322-0a0d1028cd32",
+			"type": "string"
+		}
+	]
+}
