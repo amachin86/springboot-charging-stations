@@ -14,15 +14,14 @@ This repository contains a comprehensive example of token-based authentication u
 
 - Java 11
 - Maven
-- MySQL 8.0 or later
-- MySQL WorkBench
+- MariaDB 11.5.2
 
 ## Getting Started
 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/Vimal1464/spring-boot-security-jwt-example.git
+   git clone https://github.com/amachin86/springboot-charging-stations.git
    ```
 
 2. Navigate to the project directory:
@@ -41,6 +40,15 @@ This repository contains a comprehensive example of token-based authentication u
 
 5. Access the application at [http://localhost:9000](http://localhost:9000).
 
-## Charging Station Postman Test 
-   Save Charging Station
-   ![](D:\TEST - WORK\Sping Boot\Postman Imagenes\Charging Station\save.png)
+## Regiter user
+   
+   ![](image\create.png)
+   
+## User Login
+![](image\login.png)
+
+### Now add the Bearer token from postman & you will be able to acess any route.
+
+![](image\listar.png)
+
+Note: In the Postman Test folder you will find the postman collection for testing.
