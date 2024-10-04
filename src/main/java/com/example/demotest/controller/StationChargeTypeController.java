@@ -12,12 +12,14 @@ import com.example.demotest.repository.StationChargerTypeRepository;
 import com.example.demotest.service.ChargingStationService;
 import com.example.demotest.service.StationChargerTypeService;
 import com.example.demotest.utils.MapperUtils;
+import com.sun.istack.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -63,7 +65,7 @@ public class StationChargeTypeController {
     }
 
     @PostMapping
-    public ResponseEntity<APIResponse> createStationChargerType(@RequestBody StationChargerTypeRequest StationChargerType) {
+    public ResponseEntity<APIResponse> createStationChargerType(@Valid @NotNull @RequestBody StationChargerTypeRequest StationChargerType) {
 
         StationChargerTypeResponse stationChargerTypeResponse = service.save(StationChargerType);
         //StationChargerType stationChargerTypeModel = repository.saveAndFlush(StationChargerType);
@@ -83,7 +85,7 @@ public class StationChargeTypeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<APIResponse> updateStationChargerType(@PathVariable Long id, @RequestBody StationChargerTypeRequest StationChargerType) {
+    public ResponseEntity<APIResponse> updateStationChargerType(@PathVariable Long id, @Valid @NotNull @RequestBody StationChargerTypeRequest StationChargerType) {
 
         StationChargerTypeResponse StationChargerTypeResponse = service.update(id, StationChargerType);
         if (StationChargerTypeResponse == null) {

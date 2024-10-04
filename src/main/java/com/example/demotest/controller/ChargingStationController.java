@@ -7,6 +7,7 @@ import com.example.demotest.entity.ChargingStation;
 import com.example.demotest.entity.Status;
 import com.example.demotest.repository.ChargingStationRepository;
 import com.example.demotest.service.ChargingStationService;
+import com.sun.istack.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,6 +30,7 @@ public class ChargingStationController {
     @Autowired
     private ChargingStationRepository repository;
 
+    @Cacheable("chargingStation")
     @GetMapping
     public ResponseEntity<APIResponse> getAllChargingStations() {
 
@@ -43,6 +46,7 @@ public class ChargingStationController {
 
     }
 
+    @Cacheable("chargingStation")
     @GetMapping("/{id}")
     public ResponseEntity<APIResponse> getChargingStationById(@PathVariable UUID id) {
         ChargingStationResponse chargingStation = service.ChargingStationById(id);
@@ -77,7 +81,7 @@ public class ChargingStationController {
     }
 
     @PostMapping
-    public ResponseEntity<APIResponse> createChargingStation(@RequestBody ChargingStationRequest chargingStation) {
+    public ResponseEntity<APIResponse> createChargingStation(@Valid @NotNull @RequestBody ChargingStationRequest chargingStation) {
 
         ChargingStationResponse chargingStationResponse = service.save(chargingStation);
         //ChargingStation chargingStationResponse = repository.saveAndFlush(chargingStation);
@@ -94,7 +98,7 @@ public class ChargingStationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<APIResponse> updateChargingStation(@PathVariable UUID id, @RequestBody ChargingStationRequest chargingStation) {
+    public ResponseEntity<APIResponse> updateChargingStation(@PathVariable UUID id, @Valid @NotNull @RequestBody ChargingStationRequest chargingStation) {
 
         ChargingStationResponse chargingStationResponse = service.update(id, chargingStation);
         if (chargingStationResponse == null) {
