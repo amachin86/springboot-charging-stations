@@ -22,7 +22,7 @@ This repository contains a comprehensive example of token-based authentication u
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/Vimal1464/spring-boot-security-jwt-example.git
+   https://github.com/amachin86/springboot-charging-stations.git
    ```
 
 2. Navigate to the project directory:
