@@ -29,7 +29,7 @@ public class ChargingStationService {
     @Autowired
     private ChargingStationRepository repository;
     @Autowired
-    private final Mapper dozerMapper;
+    private Mapper dozerMapper;
 
 
     @Transactional
