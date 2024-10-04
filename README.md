@@ -27,7 +27,7 @@ This repository contains a comprehensive example of token-based authentication u
 2. Navigate to the project directory:
 
    ```bash
-   cd demo-test
+   cd springboot-charging-stations
    ```
 
 3. Configure MySQL database properties in `src/main/resources/application.properties`.
