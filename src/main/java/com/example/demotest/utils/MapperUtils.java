@@ -34,17 +34,7 @@ public class MapperUtils {
 
     public static StationChargerTypeResponse convertStationChargerTypeToStationChargerTypeResponse(StationChargerType stationChargerType){
 
-
-
-       /*ChargingStationResponse chargingStationResponse = ChargingStationResponse.builder()
-                .numberOfChargingPoints(stationChargerType.getChargingStation().getAvailableNumberOfChargingPoints())
-                .location(stationChargerType.getChargingStation().getLocation())
-                .chargerType(stationChargerType.getChargingStation().getChargerType().toString())
-                .status(stationChargerType.getChargingStation().getStatus().toString())
-                .id(stationChargerType.getChargingStation().getId().toString())
-                .build();*/
-
-        return StationChargerTypeResponse.builder()
+            return StationChargerTypeResponse.builder()
                 .id(stationChargerType.getId())
                 .power_levels(stationChargerType.getPower_levels())
                 .status(stationChargerType.getStatus().toString())
