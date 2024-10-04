@@ -3,12 +3,14 @@ package com.example.demotest.controller;
 
 import com.example.demotest.Auth.JwtHelper;
 import com.example.demotest.config.AuthConfig;
+import com.example.demotest.dto.APIResponse;
 import com.example.demotest.dto.request.JwtRequest;
 import com.example.demotest.dto.request.UserRequestDto;
 import com.example.demotest.dto.response.JwtResponse;
 import com.example.demotest.dto.response.UserResponseDto;
 import com.example.demotest.exp.UserAlreadyExistsException;
 import com.example.demotest.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@Slf4j
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -45,20 +48,34 @@ public class AuthController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<JwtResponse> createUser(@Valid @RequestBody UserRequestDto userRequestDto) {
+    public ResponseEntity<APIResponse> createUser(@RequestBody @Valid UserRequestDto userRequestDto) {
         try {
             UserResponseDto userResponseDto = userService.createUser(userRequestDto);
             UserDetails userDetails = userDetailsService.loadUserByUsername(userResponseDto.getEmail());
-            System.out.println("from db info");
-            System.out.println(userDetails.getUsername());
-            System.out.println(userDetails.getPassword());
+            log.info("from db info");
+            log.info(userDetails.getUsername());
+            log.info(userDetails.getPassword());
 
             String token = this.helper.generateToken(userDetails);
             JwtResponse jwtResponse = JwtResponse.builder().token(token).build();
-            return new ResponseEntity<>(jwtResponse, HttpStatus.CREATED);
+
+            APIResponse<JwtResponse> responseDTO = APIResponse.<JwtResponse>builder()
+                    .status("Success")
+                    .results(jwtResponse)
+                    .build();
+
+
+            return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
+           // return new ResponseEntity<>(jwtResponse, HttpStatus.CREATED);
         } catch (UserAlreadyExistsException ex) {
             // Handle the exception and return an appropriate response
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(new JwtResponse("User already exists: " + ex.getMessage()));
+            JwtResponse jwtResponse = new JwtResponse("User already exists: " + ex.getMessage());
+            APIResponse<JwtResponse> responseDTO = APIResponse.<JwtResponse>builder()
+                    .status("Success")
+                    .results(jwtResponse)
+                    .build();
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(responseDTO);
+           // return ResponseEntity.status(HttpStatus.CONFLICT).body(new JwtResponse("User already exists: " + ex.getMessage()));
         }
     }
 
