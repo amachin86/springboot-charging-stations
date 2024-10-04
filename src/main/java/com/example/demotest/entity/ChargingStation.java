@@ -97,6 +97,16 @@ public class ChargingStation {
         }
         return total;
     }
+
+    @Override
+    public String toString() {
+        return "ChargingStation{" +
+                "id=" + id +
+                ", location=" + location +
+                ", chargerType=" + chargerType +
+                ", stationChargerTypes=" + stationChargerTypes +
+                '}';
+    }
 }
 
 

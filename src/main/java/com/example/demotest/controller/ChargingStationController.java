@@ -72,7 +72,7 @@ public class ChargingStationController {
                 .status("Success")
                 .results(chargingStation.getStatus())
                 .build();
-        log.info("ChargingStationController:getChargingStationById by Charging Station id {} response {}", id, responseDTO);
+        log.info("ChargingStationController:getStatus id {} response {}", id, responseDTO);
         return ResponseEntity.ok(responseDTO);
     }
 

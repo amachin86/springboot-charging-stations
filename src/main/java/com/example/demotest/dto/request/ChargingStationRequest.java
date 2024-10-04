@@ -15,7 +15,7 @@ import java.util.Set;
 
 @Data
 @AllArgsConstructor
-@ToString
+//@ToString
 @Builder
 public class ChargingStationRequest {
     private ChargerType chargerType;
@@ -27,4 +27,11 @@ public class ChargingStationRequest {
         stationChargerTypes = new HashSet<>();
     }*/
 
+    @Override
+    public String toString() {
+        return "ChargingStationRequest{" +
+                "chargerType=" + chargerType +
+                ", location=" + location +
+                '}';
+    }
 }

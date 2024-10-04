@@ -40,13 +40,17 @@ public class ChargingStationService {
             log.debug("ChargingStationService::save request parameters {}", chargingStationRequest);
 
             ChargingStation saveStation = MapperUtils.DTOToChangingStationModel(chargingStationRequest);
+            log.info("BD RESP {}" , saveStation);
+
             ChargingStation chanChargingStationResp = repository.saveAndFlush(saveStation);
+
+
 
             chargingStationResponse = dozerMapper.map(chanChargingStationResp, ChargingStationResponse.class);
             log.debug("ChargingStationService::save receive response from Database {}", chargingStationResponse);
         } catch (Exception ex) {
             log.error("Exception occurred while persisting Charging Station to Database, Exception message {}", ex.getMessage());
-            throw new RuntimeException("Exception occurred while created a new Charging Station");
+            throw new RuntimeException("Exception occurred while created a new Charging Station \n " + ex);
         }
         log.info("Charging StationerviceImpl::save execution ended.");
         return chargingStationResponse;
@@ -65,14 +69,12 @@ public class ChargingStationService {
             log.debug("ChargingStationService::update request parameters id {} and Charging Station {}", id, chargingStationRequest);
 
             ChargingStation saveStation = MapperUtils.DTOToChangingStationModel(chargingStationRequest);
-            //ChargingStation saveStation = dozerMapper.map(chargingStation, ChargingStation.class);
 
-            log.info("MAPPER****** {}" + saveStation.getLocation());
 
             ChargingStation chargingStationModel = repository.save(saveStation);
             chargingStationResponse  = MapperUtils.convertChargingStationToChargingStationResponse(chargingStationModel);
 
-            log.debug("ChargingStationService::updateDrone receive response from Database {}", chargingStationResponse);
+            log.debug("ChargingStationService::update receive response from Database {}", chargingStationResponse);
         } catch (Exception ex) {
             log.error("Exception occurred while updating Charging Station to Database, Exception message {}", ex.getMessage());
             throw new RuntimeException("Exception occurred while update Charging Station Service");

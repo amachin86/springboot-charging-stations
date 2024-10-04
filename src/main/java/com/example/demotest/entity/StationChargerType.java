@@ -25,4 +25,14 @@ public class StationChargerType {
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @Override
+    public String toString() {
+        return "StationChargerType{" +
+                "id=" + id +
+                ", power_levels=" + power_levels +
+                ", chargingStation=" + chargingStation +
+                ", status=" + status +
+                '}';
+    }
 }
