@@ -52,3 +52,10 @@ This repository contains a comprehensive example of token-based authentication u
 ![](image\listar.png)
 
 Note: In the Postman Test folder you will find the postman collection for testing.
+
+###Command for running all test class:
+
+```bash
+  mvn -Dtest=DemoTestApplicationTests test
+```
+
