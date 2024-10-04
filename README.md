@@ -40,7 +40,7 @@ This repository contains a comprehensive example of token-based authentication u
 
 5. Access the application at [http://localhost:9000](http://localhost:9000).
 
-## Regiter user
+## Register user
    
    ![](image\create.png)
    
