@@ -76,10 +76,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         //
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
-
-            //fetch user detail from username
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+            UserDetails userDetails = null;
+             try {
+                 //fetch user detail from username
+                  userDetails = this.userDetailsService.loadUserByUsername(username);
+             }catch (Exception e){
+                 logger.info("JwtAuthenticationFilter::doFilterInternal User not found");
+                 filterChain.doFilter(request, response); //doubt hai
+                 return;
+             }
             Boolean validateToken = this.jwtHelper.validateToken(token, userDetails);
             if (validateToken) {
 

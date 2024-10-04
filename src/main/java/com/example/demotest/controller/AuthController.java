@@ -52,6 +52,7 @@ public class AuthController {
         try {
             UserResponseDto userResponseDto = userService.createUser(userRequestDto);
             UserDetails userDetails = userDetailsService.loadUserByUsername(userResponseDto.getEmail());
+
             log.info("from db info");
             log.info(userDetails.getUsername());
             log.info(userDetails.getPassword());
@@ -67,7 +68,7 @@ public class AuthController {
 
             return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
            // return new ResponseEntity<>(jwtResponse, HttpStatus.CREATED);
-        } catch (UserAlreadyExistsException ex) {
+       }catch (UserAlreadyExistsException ex) {
             // Handle the exception and return an appropriate response
             JwtResponse jwtResponse = new JwtResponse("User already exists: " + ex.getMessage());
             APIResponse<JwtResponse> responseDTO = APIResponse.<JwtResponse>builder()

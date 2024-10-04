@@ -6,6 +6,7 @@ import com.example.demotest.dto.response.UserResponseDto;
 import com.example.demotest.entity.UserEnitiy;
 import com.example.demotest.exp.UserAlreadyExistsException;
 import com.example.demotest.repository.UserRepo;
+import lombok.extern.slf4j.Slf4j;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class UserImp implements UserService {
 
@@ -28,23 +30,35 @@ public class UserImp implements UserService {
 
     @Autowired
     private AuthConfig authConfig;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEnitiy user = userRepo.findByEmail(username).orElseThrow(()->new RuntimeException("User not found"));
-        System.out.println("Retrived Data");
-        System.out.println(user.getPassword()+"Retrived Password");
-        System.out.println(user.getUsername());
-        System.out.println(user.getId());
-        System.out.println(user.getEmail());
-        System.out.println("-----");
+       // UserEnitiy user = userRepo.findByEmail(username).orElseThrow(()->new RuntimeException("User not found"));
+        Optional<UserEnitiy> userOp = userRepo.findByEmail(username);
+        if (!userOp.isPresent())
+            throw new UsernameNotFoundException("User not found");
+
+        UserEnitiy user = userOp.get();
+        log.info("Retrived Data");
+        log.info(user.getPassword()+"Retrived Password");
+        log.info(user.getUsername());
+        log.info("user id {} ", user.getId());
+        log.info(user.getEmail());
+        log.info("-----");
         return user;
     }
 
     @Override
     public List<UserResponseDto> getAllUser() {
-        List<UserEnitiy> userEnitiys = userRepo.findAll();
-        List<UserResponseDto> userResponseDtoList = userEnitiys.stream().map(user->this.userEntityToUserRespDto(user)).collect(Collectors.toList());
-        return userResponseDtoList;
+        try {
+            List<UserEnitiy> userEnitiys = userRepo.findAll();
+            List<UserResponseDto> userResponseDtoList = userEnitiys.stream().map(user -> this.userEntityToUserRespDto(user)).collect(Collectors.toList());
+            return userResponseDtoList;
+        }catch (Exception ex) {
+            log.error(ex.getMessage());
+            throw new UsernameNotFoundException(ex.getMessage());
+        }
+
 
 
     }

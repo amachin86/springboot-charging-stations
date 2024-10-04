@@ -4,6 +4,7 @@ package com.example.demotest.exception;
 import com.example.demotest.dto.APIResponse;
 import com.example.demotest.dto.ErrorDTO;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -36,6 +37,19 @@ public class ControllerAdvise {
 
     @ExceptionHandler(value = RuntimeException.class)
     public APIResponse<?> handleServiceException(RuntimeException exception){
+        APIResponse<?> serviceResponse = new APIResponse<>();
+        ErrorDTO errorDTO = ErrorDTO.builder()
+                .campo("")
+                .message(exception.getMessage())
+                .build();
+
+        serviceResponse.setStatus("FAILED");
+        serviceResponse.setErrors(Collections.singletonList(errorDTO));
+        return serviceResponse;
+    }
+
+    @ExceptionHandler(value = UsernameNotFoundException.class)
+    public APIResponse<?> handleUsernameNotFoundException(RuntimeException exception){
         APIResponse<?> serviceResponse = new APIResponse<>();
         ErrorDTO errorDTO = ErrorDTO.builder()
                 .campo("")
