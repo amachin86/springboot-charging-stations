@@ -81,7 +81,7 @@ public class ChargingStationController {
     }
 
     @PostMapping
-    public ResponseEntity<APIResponse> createChargingStation(@Valid @NotNull @RequestBody ChargingStationRequest chargingStation) {
+    public ResponseEntity<APIResponse> createChargingStation(@RequestBody @Valid @NotNull ChargingStationRequest chargingStation) {
 
         ChargingStationResponse chargingStationResponse = service.save(chargingStation);
         //ChargingStation chargingStationResponse = repository.saveAndFlush(chargingStation);
@@ -98,7 +98,7 @@ public class ChargingStationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<APIResponse> updateChargingStation(@PathVariable UUID id, @Valid @NotNull @RequestBody ChargingStationRequest chargingStation) {
+    public ResponseEntity<APIResponse> updateChargingStation(@PathVariable UUID id, @RequestBody @Valid @NotNull ChargingStationRequest chargingStation) {
 
         ChargingStationResponse chargingStationResponse = service.update(id, chargingStation);
         if (chargingStationResponse == null) {

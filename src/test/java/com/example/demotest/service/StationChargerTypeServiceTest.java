@@ -1,5 +1,6 @@
 package com.example.demotest.service;
 
+import com.example.demotest.dto.request.ChargingStationRequest;
 import com.example.demotest.dto.request.StationChargerTypeRequest;
 import com.example.demotest.dto.response.ChargingStationResponse;
 import com.example.demotest.dto.response.StationChargerTypeResponse;
@@ -78,7 +79,7 @@ class StationChargerTypeServiceTest {
     void save() {
         StationChargerTypeRequest stationChargerTypeRequest = StationChargerTypeRequest.builder()
                 .status(Status.AVAILABLE)
-                .chargingStation(ChargingStation.builder().id(uuid).build())
+                .chargingStation(ChargingStationRequest.builder().id(uuid).build())
                 .power_levels(100)
                 .build();
 
@@ -100,7 +101,7 @@ class StationChargerTypeServiceTest {
     void update() {
         StationChargerTypeRequest stationChargerTypeRequest = StationChargerTypeRequest.builder()
                 .status(Status.AVAILABLE)
-                .chargingStation(ChargingStation.builder().id(uuid).build())
+                .chargingStation(ChargingStationRequest.builder().id(uuid).build())
                 .power_levels(2000)
                 .build();
 

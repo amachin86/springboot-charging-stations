@@ -1,6 +1,7 @@
 package com.example.demotest.service;
 
 import com.example.demotest.dto.request.ChargingStationRequest;
+import com.example.demotest.dto.request.LocationDTO;
 import com.example.demotest.dto.response.ChargingStationResponse;
 import com.example.demotest.entity.ChargerType;
 import com.example.demotest.entity.ChargingStation;
@@ -74,7 +75,7 @@ class ChargingStationServiceTest {
     void save() {
 
         ChargingStationRequest _chargingStationRequest = ChargingStationRequest.builder()
-                .location(new Location("Habana, Cuba", 56, 100))
+                .location(new LocationDTO("Habana, Cuba", 56, 100))
                 .chargerType(ChargerType.DC_FAST_CHARGER)
                 .build();
 
@@ -96,7 +97,7 @@ class ChargingStationServiceTest {
     void update() {
         Mockito.when(repositoryMock.findById(Mockito.any(UUID.class))).thenReturn(Optional.of(entityResponse));
         ChargingStationRequest chargingStationRequest1 = ChargingStationRequest.builder()
-                .location(new Location("Habana, Cuba", 56, 200))
+                .location(new LocationDTO("Habana, Cuba", 56, 200))
                 .chargerType(ChargerType.DC_FAST_CHARGER)
                 .build();
 

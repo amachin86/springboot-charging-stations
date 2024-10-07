@@ -59,3 +59,31 @@ Note: In the Postman Test folder you will find the postman collection for testin
   mvn -Dtest=DemoTestApplicationTests test
 ```
 
+## Running Spring Boot Application and MariaDB Database Using Docker Compose
+ Note: Change application.properties file this line
+ spring.profiles.active=dev
+  for
+ spring.profiles.active=test
+
+Now we have our docker compose setup for this application. So first create a jar build for this application using the following command,
+
+Navigate to application root folder and execute,
+
+```bash
+  mvn clean build
+```
+Now there should be a newly created jar file with all the necessary files to run this application on build/libs folder.
+
+Then create the build with docker-compose to build a docker image using the built jar file.
+
+```bash
+  $ docker-compose build
+```
+
+Then use the following command to run the whole setup using docker-compose.
+
+```bash
+  $ docker-compose up
+```
+
+Then It will capture the docker-compose.yml and start running using the instructions given on that file.

@@ -8,9 +8,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 
 @Data
@@ -18,8 +21,11 @@ import java.util.Set;
 //@ToString
 @Builder
 public class ChargingStationRequest {
+    private UUID id;
     private ChargerType chargerType;
-    private Location location;
+
+    @Valid
+    private LocationDTO location;
 
     /*Set<StationChargerTypeResponse> stationChargerTypes;
     private int numberOfChargingPoints;

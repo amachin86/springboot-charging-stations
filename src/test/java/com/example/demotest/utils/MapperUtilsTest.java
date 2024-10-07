@@ -1,6 +1,7 @@
 package com.example.demotest.utils;
 
 import com.example.demotest.dto.request.ChargingStationRequest;
+import com.example.demotest.dto.request.LocationDTO;
 import com.example.demotest.dto.request.StationChargerTypeRequest;
 import com.example.demotest.dto.response.ChargingStationResponse;
 import com.example.demotest.dto.response.StationChargerTypeResponse;
@@ -79,7 +80,7 @@ class MapperUtilsTest {
     void DTOToChangingStationModel() {
 
         ChargingStationRequest chargingStationRequest = ChargingStationRequest.builder()
-                .location(new Location("Habana, Cuba", 56, 100))
+                .location(new LocationDTO("Habana, Cuba", 56, 100))
                 .chargerType(ChargerType.DC_FAST_CHARGER)
                 .build();
 
@@ -93,7 +94,7 @@ class MapperUtilsTest {
 
         StationChargerTypeRequest stationChargerTypeRequest = StationChargerTypeRequest.builder()
                 .status(Status.AVAILABLE)
-                .chargingStation(ChargingStation.builder().id(uuid).build())
+                .chargingStation(ChargingStationRequest.builder().id(uuid).build())
                 .power_levels(100)
                 .build();
 

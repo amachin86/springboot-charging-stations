@@ -15,9 +15,7 @@ import javax.validation.constraints.Positive;
 public class Location {
 
     private String address;
-    @Positive(message = "The value of the latitude must be positive")
     private double latitude;
-    @Positive(message = "The value of the latitude must be positive")
     private double longitude;
 
 }

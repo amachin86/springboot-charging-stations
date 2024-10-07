@@ -5,6 +5,7 @@ import com.example.demotest.dto.request.StationChargerTypeRequest;
 import com.example.demotest.dto.response.ChargingStationResponse;
 import com.example.demotest.dto.response.StationChargerTypeResponse;
 import com.example.demotest.entity.ChargingStation;
+import com.example.demotest.entity.Location;
 import com.example.demotest.entity.StationChargerType;
 import lombok.extern.slf4j.Slf4j;
 import org.dozer.DozerBeanMapper;
@@ -42,16 +43,22 @@ public class MapperUtils {
     }
 
     public static ChargingStation DTOToChangingStationModel(ChargingStationRequest chargingStationRequest){
+        Location location = Location.builder()
+                .address(chargingStationRequest.getLocation().getAddress())
+                .latitude(chargingStationRequest.getLocation().getLatitude())
+                .longitude(chargingStationRequest.getLocation().getLongitude())
+                .build();
         return ChargingStation.builder()
                 .chargerType(chargingStationRequest.getChargerType())
-                .location(chargingStationRequest.getLocation())
+                .location(location)
                 .stationChargerTypes(new HashSet<>())
                 .build();
     }
 
     public static StationChargerType DTOToStationChargerType(StationChargerTypeRequest stationChargerTypeRequest){
+        ChargingStation chanStation =  DTOToChangingStationModel(stationChargerTypeRequest.getChargingStation());
         return StationChargerType.builder()
-                .chargingStation(stationChargerTypeRequest.getChargingStation())
+                .chargingStation(chanStation)
                 .power_levels(stationChargerTypeRequest.getPower_levels())
                 .status(stationChargerTypeRequest.getStatus())
                 .build();

@@ -15,7 +15,7 @@ public class UserRequestDto {
     @Email(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}", message = "email field is not valid")
     private String email;
 
-    @NotBlank(message = "password shouldn't be NULL or EMPTY")
+    @NotBlank(message = "The value of the password shouldn't be NULL or EMPTY")
     private String password;
     @NotBlank(message = "roles shouldn't be NULL or EMPTY")
     private String roles;  //ROLE_ADMIN ROLE_USER;
