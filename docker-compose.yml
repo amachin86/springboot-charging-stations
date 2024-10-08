@@ -7,9 +7,9 @@ services:
       - 9000:9000
     depends_on:
       - maria_db
-    command: sh -c './wait-for mysql_db:3306 -- npm start'
+    command: sh -c './wait-for mysql_db:3308 -- npm start'
   maria_db:
-    image: "mariadb:10.5.8"
+    image: "mariadb"  #10.5.8
     restart: always
     ports:
       - 3307:3306

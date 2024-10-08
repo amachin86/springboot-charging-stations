@@ -65,12 +65,14 @@ Note: In the Postman Test folder you will find the postman collection for testin
   for
  spring.profiles.active=test
 
+IMAGE TAG: latest
+
 Now we have our docker compose setup for this application. So first create a jar build for this application using the following command,
 
 Navigate to application root folder and execute,
 
 ```bash
-  mvn clean build
+  mvn clean  package
 ```
 Now there should be a newly created jar file with all the necessary files to run this application on build/libs folder.
 
