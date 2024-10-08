@@ -1,11 +1,13 @@
 #
 # Build stage
 #
-FROM maven:3.8.3-openjdk-11 AS build
-COPY src /home/app/src
-COPY pom.xml /home/app
-RUN mvn -f /home/app/pom.xml clean package
+
+FROM openjdk:11-jdk
+
+COPY target/spring_rest_docker.jar .
+
 EXPOSE 9000
-ENTRYPOINT ["java","-jar","/home/app/target/spring_rest_docker.jar"]
+
+ENTRYPOINT ["java","-jar","spring_rest_docker.jar"]
 
 
