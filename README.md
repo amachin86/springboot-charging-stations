@@ -72,7 +72,7 @@ Now we have our docker compose setup for this application. So first create a jar
 Navigate to application root folder and execute,
 
 ```bash
-  mvn clean  package
+  mvn clean package
 ```
 Now there should be a newly created jar file with all the necessary files to run this application on build/libs folder.
 
