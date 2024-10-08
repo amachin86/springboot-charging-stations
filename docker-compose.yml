@@ -5,16 +5,27 @@ services:
     restart: always
     ports:
       - 9000:9000
+    networks:
+      - springapimysql-net
+    environment:
+      - spring.datasource.url=jdbc:mysql://mysqldb:3307/demo_test?useSSL=false&allowPublicKeyRetrieval=true
     depends_on:
-      - maria_db
-    command: sh -c './wait-for mysql_db:3308 -- npm start'
-  maria_db:
-    image: "mariadb"  #10.5.8
+      - mariadb
+
+    volumes:
+      - .m2:/root/.m2
+
+  mariadb:
+    image: "mariadb"
     restart: always
     ports:
       - 3307:3306
+    networks:
+      - springapimysql-net
     environment:
       MYSQL_DATABASE: demo_test
       MYSQL_USER: root
       MYSQL_PASSWORD: root
       MYSQL_ROOT_PASSWORD: root
+networks:
+  springapimysql-net:
