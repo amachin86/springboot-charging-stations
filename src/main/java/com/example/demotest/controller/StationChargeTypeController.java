@@ -1,17 +1,10 @@
 package com.example.demotest.controller;
 
 import com.example.demotest.dto.APIResponse;
-import com.example.demotest.dto.request.ChargingStationRequest;
 import com.example.demotest.dto.request.StationChargerTypeRequest;
-import com.example.demotest.dto.response.ChargingStationResponse;
 import com.example.demotest.dto.response.StationChargerTypeResponse;
-import com.example.demotest.entity.ChargingStation;
-import com.example.demotest.entity.StationChargerType;
-import com.example.demotest.repository.ChargingStationRepository;
 import com.example.demotest.repository.StationChargerTypeRepository;
-import com.example.demotest.service.ChargingStationService;
 import com.example.demotest.service.StationChargerTypeService;
-import com.example.demotest.utils.MapperUtils;
 import com.sun.istack.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @Slf4j
@@ -49,12 +41,12 @@ public class StationChargeTypeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<APIResponse> getStationChargerTypeById(@PathVariable Long id) {
+    public ResponseEntity<?> getStationChargerTypeById(@PathVariable Long id) {
         StationChargerTypeResponse StationChargerType = service.StationChargerTypeById(id);
 
 
        if (StationChargerType == null) {
-            return ResponseEntity.notFound().build();
+           return new ResponseEntity<>("No Station Charger Type Found,", HttpStatus.NOT_FOUND);
         }
         APIResponse<StationChargerTypeResponse> responseDTO = APIResponse.<StationChargerTypeResponse>builder()
                 .status("Success")
@@ -67,7 +59,7 @@ public class StationChargeTypeController {
     @PostMapping
     public ResponseEntity<APIResponse> createStationChargerType(@Valid @NotNull @RequestBody StationChargerTypeRequest StationChargerType) {
 
-        StationChargerTypeResponse stationChargerTypeResponse = service.save(StationChargerType);
+        StationChargerTypeResponse stationChargerTypeResponse = service.createStationChargerType(StationChargerType);
         //StationChargerType stationChargerTypeModel = repository.saveAndFlush(StationChargerType);
         log.info("StationChargerTypeController:createStationChargerType request body {}", StationChargerType);
         if (stationChargerTypeResponse == null){
@@ -85,12 +77,11 @@ public class StationChargeTypeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<APIResponse> updateStationChargerType(@PathVariable Long id, @Valid @NotNull @RequestBody StationChargerTypeRequest StationChargerType) {
+    public ResponseEntity<?> updateStationChargerType(@PathVariable Long id, @Valid @NotNull @RequestBody StationChargerTypeRequest StationChargerType) {
 
         StationChargerTypeResponse StationChargerTypeResponse = service.update(id, StationChargerType);
         if (StationChargerTypeResponse == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            //return ResponseEntity.notFound().build();
+            return new ResponseEntity<>("No Station Charger Type Found,", HttpStatus.NOT_FOUND);
         }
         log.info("StationChargerTypeController:updateStationChargerType request body {}", StationChargerType);
 
@@ -104,13 +95,13 @@ public class StationChargeTypeController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<APIResponse> deleteStationChargerType(@PathVariable Long id) {
+    public ResponseEntity<?> deleteStationChargerType(@PathVariable Long id) {
 
         log.info("StationChargerTypeController:deleteStationChargerType Station Charger Type id {} response {}", id);
 
         StationChargerTypeResponse stationChargeTypeResponse = service.deleteById(id);
         if (stationChargeTypeResponse == null) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("No Station Charger Type Found,", HttpStatus.NOT_FOUND);
         }
         APIResponse<StationChargerTypeResponse> responseDTO = APIResponse.<StationChargerTypeResponse>builder()
                 .status("Success Delete")

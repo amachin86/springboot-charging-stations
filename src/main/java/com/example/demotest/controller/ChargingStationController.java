@@ -3,15 +3,12 @@ package com.example.demotest.controller;
 import com.example.demotest.dto.APIResponse;
 import com.example.demotest.dto.request.ChargingStationRequest;
 import com.example.demotest.dto.response.ChargingStationResponse;
-import com.example.demotest.entity.ChargingStation;
-import com.example.demotest.entity.Status;
 import com.example.demotest.repository.ChargingStationRepository;
 import com.example.demotest.service.ChargingStationService;
 import com.sun.istack.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,12 +45,12 @@ public class ChargingStationController {
 
     @Cacheable("chargingStation")
     @GetMapping("/{id}")
-    public ResponseEntity<APIResponse> getChargingStationById(@PathVariable UUID id) {
+    public ResponseEntity<?> getChargingStationById(@PathVariable UUID id) {
         ChargingStationResponse chargingStation = service.ChargingStationById(id);
 
 
        if (chargingStation == null) {
-            return ResponseEntity.notFound().build();
+            return new ResponseEntity<>("No Changing Station Found,", HttpStatus.NOT_FOUND);
         }
         APIResponse<ChargingStationResponse> responseDTO = APIResponse.<ChargingStationResponse>builder()
                 .status("Success")
@@ -65,12 +62,12 @@ public class ChargingStationController {
 
     @Cacheable("stationStatus")
     @GetMapping("/{id}/status")
-    public ResponseEntity<APIResponse> getStatus(@PathVariable UUID id) {
+    public ResponseEntity<?> getStatus(@PathVariable UUID id) {
 
         ChargingStationResponse chargingStation = service.ChargingStationById(id);
 
         if (chargingStation == null) {
-            return ResponseEntity.notFound().build();
+            return new ResponseEntity<>("No Changing Station Found,", HttpStatus.NOT_FOUND);
         }
         APIResponse<String> responseDTO = APIResponse.<String>builder()
                 .status("Success")
@@ -83,7 +80,7 @@ public class ChargingStationController {
     @PostMapping
     public ResponseEntity<APIResponse> createChargingStation(@RequestBody @Valid @NotNull ChargingStationRequest chargingStation) {
 
-        ChargingStationResponse chargingStationResponse = service.save(chargingStation);
+        ChargingStationResponse chargingStationResponse = service.createChangingStation(chargingStation);
         //ChargingStation chargingStationResponse = repository.saveAndFlush(chargingStation);
         log.info("ChargingStationController:createChargingStation request body {}", chargingStation);
 
@@ -98,12 +95,12 @@ public class ChargingStationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<APIResponse> updateChargingStation(@PathVariable UUID id, @RequestBody @Valid @NotNull ChargingStationRequest chargingStation) {
+    public ResponseEntity<?> updateChargingStation(@PathVariable UUID id, @RequestBody @Valid @NotNull ChargingStationRequest chargingStation) {
 
         ChargingStationResponse chargingStationResponse = service.update(id, chargingStation);
         if (chargingStationResponse == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            //return ResponseEntity.notFound().build();
+            return new ResponseEntity<>("No Changing Station Found,", HttpStatus.NOT_FOUND);
+
         }
         log.info("ChargingStationController:updateChargingStation request body {}", chargingStation);
 
@@ -117,13 +114,13 @@ public class ChargingStationController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<APIResponse> deleteChargingStation(@PathVariable UUID id) {
+    public ResponseEntity<?> deleteChargingStation(@PathVariable UUID id) {
 
         log.info("ChargingStationController:deleteChargingStation Charging Station id {} response {}", id);
 
         ChargingStationResponse chargingStationResponse = service.deleteById(id);
         if (chargingStationResponse == null) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("No Changing Station Found,", HttpStatus.NOT_FOUND);
         }
         APIResponse<ChargingStationResponse> responseDTO = APIResponse.<ChargingStationResponse>builder()
                 .status("Success Delete")

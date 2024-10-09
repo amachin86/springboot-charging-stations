@@ -34,7 +34,7 @@ public class StationChargerTypeService {
     private final Mapper dozerMapper;
 
     @Transactional
-    public StationChargerTypeResponse save(StationChargerTypeRequest chargingStationRequest) {
+    public StationChargerTypeResponse createStationChargerType(StationChargerTypeRequest chargingStationRequest) {
 
         UUID chargingStationId = chargingStationRequest.getChargingStation().getId();
         Optional<ChargingStation> changingStationModel = chargingStationRepository.findById(chargingStationId);

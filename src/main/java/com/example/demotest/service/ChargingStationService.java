@@ -3,7 +3,6 @@ package com.example.demotest.service;
 import com.example.demotest.dto.request.ChargingStationRequest;
 import com.example.demotest.dto.response.ChargingStationResponse;
 import com.example.demotest.entity.ChargingStation;
-import com.example.demotest.entity.Status;
 import com.example.demotest.repository.ChargingStationRepository;
 import com.example.demotest.utils.MapperUtils;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -33,7 +31,7 @@ public class ChargingStationService {
 
 
     @Transactional
-    public ChargingStationResponse save(ChargingStationRequest chargingStationRequest) {
+    public ChargingStationResponse createChangingStation(ChargingStationRequest chargingStationRequest) {
         ChargingStationResponse chargingStationResponse = null;
         log.info("ChargingStationService::save execution started.");
         try {
@@ -120,7 +118,7 @@ public class ChargingStationService {
         if (!chargingStationModel.isPresent())
             return null;
 
-        log.error("ChargingStationService:ChargingStationById retrieving Charging Station from the Database {}", chargingStationModel.get().toString());
+        log.debug("ChargingStationService:ChargingStationById retrieving Charging Station from the Database {}", chargingStationModel.get().toString());
         
         chargingStationResponse = MapperUtils.convertChargingStationToChargingStationResponse(chargingStationModel.get());
         log.debug("ChargingStationService:ChargingStationById retrieving Charging Station DTO {}", chargingStationResponse);
